@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full Discovery — Aegus Digital Agency</title>
+    <meta name="description" content="Deep-dive discovery form. 20–25 questions, 15–20 minutes. Help us understand your business so we can recommend exactly the right solution.">
+    <style>
+        :root {
+            --bg: #0F1729;
+            --bg-card: #1A2332;
+            --border: #2A3444;
+            --accent: #00D4AA;
+            --accent-glow: rgba(0, 212, 170, 0.15);
+            --secondary: #FF6B8A;
+            --muted: #8B95A5;
+            --text: #E8ECF1;
+            --white: #FFFFFF;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ── Nav ── */
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 200;
+            background: rgba(15, 23, 41, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.9rem 2rem;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo {
+            font-size: 1.3rem; font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), #00F5C8);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+        .logo span { font-weight: 400; -webkit-text-fill-color: var(--muted); opacity: 0.7; }
+        .nav-back {
+            color: var(--muted); text-decoration: none; font-size: 0.88rem;
+            transition: color 0.2s;
+        }
+        .nav-back:hover { color: var(--accent); }
+
+        /* ── Progress Bar ── */
+        .progress-bar-wrapper {
+            position: fixed; top: 57px; left: 0; right: 0; z-index: 100;
+            background: rgba(15, 23, 41, 0.95);
+            border-bottom: 1px solid var(--border);
+            padding: 0.9rem 2rem;
+        }
+        .progress-meta {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        .progress-label {
+            font-size: 0.8rem; font-weight: 600; color: var(--accent);
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .progress-steps { font-size: 0.78rem; color: var(--muted); }
+        .progress-track {
+            height: 4px; background: var(--border); border-radius: 4px; overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), #00F5C8);
+            border-radius: 4px;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .step-dots {
+            display: flex; gap: 0.5rem; margin-top: 0.6rem;
+        }
+        .step-dot {
+            flex: 1; height: 3px; border-radius: 3px;
+            background: var(--border);
+            transition: background 0.3s ease;
+        }
+        .step-dot.active { background: var(--accent); }
+        .step-dot.done { background: rgba(0, 212, 170, 0.5); }
+
+        /* ── Hero ── */
+        .hero {
+            padding: 8.5rem 2rem 2.5rem;
+            text-align: center;
+            background: radial-gradient(ellipse at 50% 0%, rgba(0, 212, 170, 0.07) 0%, transparent 60%);
+        }
+        .badge {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: var(--accent-glow); border: 1px solid rgba(0, 212, 170, 0.3);
+            padding: 0.35rem 1rem; border-radius: 50px; font-size: 0.78rem;
+            color: var(--accent); margin-bottom: 1.2rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .hero h1 {
+            font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800;
+            line-height: 1.15; margin-bottom: 0.8rem;
+        }
+        .hero h1 .gradient {
+            background: linear-gradient(135deg, var(--accent), #00F5C8, var(--secondary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero p { color: var(--muted); font-size: 0.98rem; max-width: 480px; margin: 0 auto; }
+
+        /* ── Form Wrapper ── */
+        .form-container {
+            max-width: 760px; margin: 0 auto; padding: 2rem 1.5rem 7rem;
+        }
+
+        /* ── Steps ── */
+        .step-section { display: none; animation: fadeUp 0.4s ease both; }
+        .step-section.active { display: block; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeLeft {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes fadeRight {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* ── Section Header ── */
+        .section-header {
+            margin-bottom: 2rem; padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .section-tag {
+            display: inline-block; font-size: 0.72rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1.5px;
+            color: var(--accent); margin-bottom: 0.4rem;
+        }
+        .section-header h2 {
+            font-size: 1.5rem; font-weight: 800; margin-bottom: 0.3rem;
+        }
+        .section-header p { color: var(--muted); font-size: 0.9rem; }
+
+        /* ── Cards ── */
+        .card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 16px; padding: 1.8rem;
+            margin-bottom: 1.2rem;
+        }
+
+        /* ── Questions ── */
+        .question-label {
+            font-size: 1rem; font-weight: 700; margin-bottom: 1rem; color: var(--white);
+        }
+        .question-sub {
+            font-size: 0.82rem; color: var(--muted);
+            margin-top: -0.6rem; margin-bottom: 1rem;
+        }
+
+        /* ── Option Cards ── */
+        .choices { display: flex; flex-direction: column; gap: 0.55rem; }
+        .choices-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.55rem;
+        }
+        .choices-3col {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 0.55rem;
+        }
+
+        .option { position: relative; }
+        .option input[type="radio"],
+        .option input[type="checkbox"] {
+            position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none;
+        }
+        .option label {
+            display: flex; align-items: flex-start; gap: 11px;
+            padding: 12px 14px; background: var(--bg);
+            border: 1.5px solid var(--border); border-radius: 11px;
+            cursor: pointer; transition: all 0.2s ease; user-select: none; width: 100%;
+            font-size: 0.9rem;
+        }
+        .option label:hover {
+            border-color: rgba(0, 212, 170, 0.4);
+            background: rgba(0, 212, 170, 0.03);
+        }
+        .option input:checked + label {
+            border-color: var(--accent);
+            background: rgba(0, 212, 170, 0.07);
+        }
+
+        .option-dot {
+            width: 17px; height: 17px; border-radius: 50%;
+            border: 2px solid var(--border); flex-shrink: 0;
+            margin-top: 1px; transition: all 0.2s; position: relative;
+        }
+        .option input[type="radio"]:checked + label .option-dot {
+            border-color: var(--accent); background: var(--accent);
+        }
+        .option input[type="radio"]:checked + label .option-dot::after {
+            content: ''; position: absolute;
+            top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 5px; height: 5px; background: var(--bg); border-radius: 50%;
+        }
+        .option-check {
+            width: 17px; height: 17px; border-radius: 4px;
+            border: 2px solid var(--border); flex-shrink: 0;
+            margin-top: 1px; transition: all 0.2s; position: relative;
+        }
+        .option input[type="checkbox"]:checked + label .option-check {
+            border-color: var(--accent); background: var(--accent);
+        }
+        .option input[type="checkbox"]:checked + label .option-check::after {
+            content: '✓'; position: absolute;
+            top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-size: 10px; font-weight: 700; color: var(--bg);
+        }
+
+        .option-content { display: flex; flex-direction: column; gap: 1px; }
+        .option-content strong { color: var(--white); font-size: 0.9rem; }
+        .option-content span { color: var(--muted); font-size: 0.8rem; }
+
+        /* ── Form Fields ── */
+        .field-group { display: flex; flex-direction: column; gap: 0.9rem; }
+        .field-row-2 {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+        }
+        .field { display: flex; flex-direction: column; gap: 0.35rem; }
+        .field label {
+            font-size: 0.78rem; font-weight: 600; color: var(--muted);
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .field input, .field select, .field textarea {
+            background: var(--bg); border: 1.5px solid var(--border);
+            color: var(--text); padding: 0.7rem 1rem;
+            border-radius: 10px; font-size: 0.9rem; font-family: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s; outline: none; width: 100%;
+        }
+        .field input:focus, .field select:focus, .field textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+        .field input::placeholder, .field textarea::placeholder { color: var(--muted); opacity: 0.6; }
+        .field select { appearance: none; cursor: pointer; }
+        .field select option { background: var(--bg-card); }
+        .field textarea { resize: vertical; line-height: 1.6; }
+
+        .inline-input {
+            background: var(--bg); border: 1.5px solid var(--border);
+            color: var(--text); padding: 0.5rem 0.8rem;
+            border-radius: 8px; font-size: 0.85rem; font-family: inherit;
+            transition: border-color 0.2s; outline: none; width: 100%;
+            margin-top: 0.5rem;
+        }
+        .inline-input:focus {
+            border-color: var(--accent);
+        }
+
+        /* ── Navigation Buttons ── */
+        .step-nav {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-top: 2.5rem; padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+        .btn-prev {
+            background: transparent; color: var(--muted);
+            padding: 0.8rem 1.5rem; border-radius: 10px; font-size: 0.9rem;
+            font-weight: 600; border: 1px solid var(--border); cursor: pointer;
+            transition: all 0.2s; font-family: inherit;
+        }
+        .btn-prev:hover { border-color: var(--accent); color: var(--accent); }
+        .btn-prev:disabled { opacity: 0.3; cursor: not-allowed; }
+        .btn-next {
+            background: var(--accent); color: var(--bg);
+            padding: 0.85rem 2rem; border-radius: 10px; font-size: 0.95rem;
+            font-weight: 700; border: none; cursor: pointer;
+            transition: all 0.2s; font-family: inherit;
+            box-shadow: 0 4px 16px var(--accent-glow);
+        }
+        .btn-next:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(0,212,170,0.3); }
+        .btn-submit-final {
+            background: var(--accent); color: var(--bg);
+            padding: 0.95rem 2.2rem; border-radius: 10px; font-size: 1rem;
+            font-weight: 700; border: none; cursor: pointer;
+            transition: all 0.2s; font-family: inherit;
+            box-shadow: 0 4px 20px var(--accent-glow);
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+        .btn-submit-final:hover { transform: translateY(-1px); box-shadow: 0 8px 30px rgba(0,212,170,0.35); }
+        .btn-submit-final:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+
+        /* Spinner */
+        .spinner {
+            width: 15px; height: 15px;
+            border: 2px solid rgba(15,23,41,0.3);
+            border-top-color: var(--bg); border-radius: 50%;
+            animation: spin 0.7s linear infinite; display: none;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Error */
+        .step-error {
+            background: rgba(255, 107, 138, 0.1); border: 1px solid rgba(255, 107, 138, 0.3);
+            color: var(--secondary); padding: 0.65rem 1rem; border-radius: 8px;
+            font-size: 0.83rem; margin-top: 1rem; display: none;
+        }
+
+        /* ── Thank You ── */
+        #thank-you {
+            min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            padding: 2rem;
+            background: radial-gradient(ellipse at 50% 40%, rgba(0,212,170,0.07) 0%, transparent 60%);
+        }
+        .ty-card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 20px; padding: 3.5rem 3rem; max-width: 540px; width: 100%;
+            text-align: center; animation: fadeUp 0.5s ease;
+        }
+        .ty-icon { font-size: 3.5rem; margin-bottom: 1.5rem; animation: bounceIn 0.6s ease; }
+        @keyframes bounceIn {
+            0% { transform: scale(0.4); opacity: 0; }
+            70% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .ty-card h2 { font-size: 1.9rem; font-weight: 800; margin-bottom: 1rem; }
+        .ty-main { font-size: 1rem; color: var(--text); margin-bottom: 0.7rem; }
+        .ty-timer {
+            background: var(--accent-glow); border: 1px solid rgba(0,212,170,0.2);
+            border-radius: 10px; padding: 1rem 1.5rem; margin: 1.2rem 0;
+            font-size: 0.9rem; color: var(--accent);
+        }
+        .ty-sub { font-size: 0.87rem; color: var(--muted); margin-bottom: 2rem; }
+        .ty-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .ty-btn-primary {
+            background: var(--accent); color: var(--bg);
+            padding: 0.8rem 1.8rem; border-radius: 10px; font-weight: 700;
+            font-size: 0.95rem; text-decoration: none; transition: all 0.2s;
+        }
+        .ty-btn-primary:hover { transform: translateY(-1px); }
+        .ty-btn-secondary {
+            background: transparent; color: var(--text);
+            padding: 0.8rem 1.8rem; border-radius: 10px; font-weight: 600;
+            font-size: 0.95rem; text-decoration: none; border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+        .ty-btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* ── Tooltip / Helper ── */
+        .helper-text {
+            font-size: 0.78rem; color: var(--muted); margin-top: 0.4rem;
+            display: flex; align-items: center; gap: 0.3rem;
+        }
+
+        /* ── Mobile ── */
+        @media (max-width: 600px) {
+            .field-row-2 { grid-template-columns: 1fr; }
+            .choices-grid, .choices-3col { grid-template-columns: 1fr; }
+            .card { padding: 1.3rem; }
+            .ty-card { padding: 2.5rem 1.5rem; }
+            .ty-btns { flex-direction: column; }
+            .step-nav { flex-direction: column-reverse; gap: 0.8rem; }
+            .step-nav button { width: 100%; }
+            .progress-bar-wrapper { padding: 0.7rem 1rem; }
+        }
+        @media (max-width: 768px) {
+            .hero { padding: 7.5rem 1.5rem 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="/" class="logo">AEGUS <span>digital</span></a>
+    <a href="/" class="nav-back">← Back to Site</a>
+</nav>
+
+<!-- Progress Bar (sticky below nav) -->
+<div class="progress-bar-wrapper">
+    <div class="progress-meta">
+        <span class="progress-label" id="progress-label">Section 1: Your Business</span>
+        <span class="progress-steps" id="progress-steps">Step 1 of 5</span>
+    </div>
+    <div class="progress-track">
+        <div class="progress-fill" id="progress-fill" style="width: 20%;"></div>
+    </div>
+    <div class="step-dots">
+        <div class="step-dot active" id="dot-1"></div>
+        <div class="step-dot" id="dot-2"></div>
+        <div class="step-dot" id="dot-3"></div>
+        <div class="step-dot" id="dot-4"></div>
+        <div class="step-dot" id="dot-5"></div>
+    </div>
+</div>
+
+<!-- Hero -->
+<div class="hero">
+    <div class="badge">🔍 Full Discovery</div>
+    <h1>Let's Build Something<br><span class="gradient">Worth Building</span></h1>
+    <p>20–25 questions, 15–20 minutes. The more you share, the more specific and useful our recommendation will be.</p>
+</div>
+
+<!-- Form Container -->
+<div class="form-container" id="form-wrapper">
+    <form id="discovery-form" novalidate>
+        <!-- FormSubmit config -->
+        <input type="hidden" name="_subject" value="🔍 Full Discovery — Aegus Digital Agency">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="table">
+
+        <!-- ══════════════ STEP 1: YOUR BUSINESS ══════════════ -->
+        <div class="step-section active" id="step-1">
+            <div class="section-header">
+                <div class="section-tag">Section 1</div>
+                <h2>Your Business</h2>
+                <p>Help us understand who you are and what you're building.</p>
+            </div>
+
+            <!-- Contact info -->
+            <div class="card">
+                <div class="question-label">Contact Information</div>
+                <div class="field-group">
+                    <div class="field-row-2">
+                        <div class="field">
+                            <label for="d-name">Your Name *</label>
+                            <input type="text" id="d-name" name="name" placeholder="Jane Smith" required>
+                        </div>
+                        <div class="field">
+                            <label for="d-email">Email Address *</label>
+                            <input type="email" id="d-email" name="email" placeholder="jane@acme.com" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q1: Business name & industry -->
+            <div class="card">
+                <div class="question-label">1. Business name and industry *</div>
+                <div class="field-group">
+                    <div class="field-row-2">
+                        <div class="field">
+                            <label for="biz-name">Business Name</label>
+                            <input type="text" id="biz-name" name="business_name" placeholder="Acme Corp" required>
+                        </div>
+                        <div class="field">
+                            <label for="biz-industry">Industry / Niche</label>
+                            <input type="text" id="biz-industry" name="industry" placeholder="e.g. Real Estate, SaaS, Health" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q2: Time in business -->
+            <div class="card">
+                <div class="question-label">2. How long have you been in business?</div>
+                <div class="choices choices-grid" id="s1q2">
+                    <div class="option">
+                        <input type="radio" id="s1q2a" name="time_in_business" value="Less than 1 year">
+                        <label for="s1q2a"><div class="option-dot"></div>Less than 1 year</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s1q2b" name="time_in_business" value="1–3 years">
+                        <label for="s1q2b"><div class="option-dot"></div>1–3 years</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s1q2c" name="time_in_business" value="3–7 years">
+                        <label for="s1q2c"><div class="option-dot"></div>3–7 years</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s1q2d" name="time_in_business" value="7+ years">
+                        <label for="s1q2d"><div class="option-dot"></div>7+ years</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q3: Team size -->
+            <div class="card">
+                <div class="question-label">3. Team size</div>
+                <div class="choices choices-grid" id="s1q3">
+                    <div class="option">
+                        <input type="radio" id="s1q3a" name="team_size" value="Solo (just me)">
+                        <label for="s1q3a"><div class="option-dot"></div>Solo (just me)</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s1q3b" name="team_size" value="2–5 people">
+                        <label for="s1q3b"><div class="option-dot"></div>2–5 people</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s1q3c" name="team_size" value="6–15 people">
+                        <label for="s1q3c"><div class="option-dot"></div>6–15 people</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s1q3d" name="team_size" value="16–50 people">
+                        <label for="s1q3d"><div class="option-dot"></div>16–50 people</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s1q3e" name="team_size" value="50+ people">
+                        <label for="s1q3e"><div class="option-dot"></div>50+ people</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q4: Revenue -->
+            <div class="card">
+                <div class="question-label">4. Approximate annual revenue</div>
+                <div class="choices choices-grid" id="s1q4">
+                    <div class="option">
+                        <input type="radio" id="s1q4a" name="annual_revenue" value="Pre-revenue (not yet launched)">
+                        <label for="s1q4a"><div class="option-dot"></div>Pre-revenue</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s1q4b" name="annual_revenue" value="Under $100k">
+                        <label for="s1q4b"><div class="option-dot"></div>Under $100k</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s1q4c" name="annual_revenue" value="$100k–$500k">
+                        <label for="s1q4c"><div class="option-dot"></div>$100k–$500k</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s1q4d" name="annual_revenue" value="$500k–$2M">
+                        <label for="s1q4d"><div class="option-dot"></div>$500k–$2M</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s1q4e" name="annual_revenue" value="$2M+">
+                        <label for="s1q4e"><div class="option-dot"></div>$2M+</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q5: Primary customer -->
+            <div class="card">
+                <div class="question-label">5. Who is your primary customer? <span style="font-weight:400; color:var(--muted); font-size:0.85rem;">(check all that apply)</span></div>
+                <div class="choices choices-grid" id="s1q5">
+                    <div class="option">
+                        <input type="checkbox" id="s1q5a" name="customer_b2c" value="Individual consumers (B2C)">
+                        <label for="s1q5a"><div class="option-check"></div>Individual consumers (B2C)</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s1q5b" name="customer_smb" value="Small businesses">
+                        <label for="s1q5b"><div class="option-check"></div>Small businesses</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s1q5c" name="customer_mid" value="Mid-market companies">
+                        <label for="s1q5c"><div class="option-check"></div>Mid-market companies</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s1q5d" name="customer_ent" value="Enterprise / large orgs">
+                        <label for="s1q5d"><div class="option-check"></div>Enterprise / large orgs</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s1q5e" name="customer_gov" value="Government / non-profit">
+                        <label for="s1q5e"><div class="option-check"></div>Government / non-profit</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q6: Client acquisition -->
+            <div class="card">
+                <div class="question-label">6. How do you currently acquire most of your clients? <span style="font-weight:400; color:var(--muted); font-size:0.85rem;">(check all that apply)</span></div>
+                <div class="choices choices-grid" id="s1q6">
+                    <div class="option">
+                        <input type="checkbox" id="s1q6a" name="acq_referral" value="Referrals / word of mouth">
+                        <label for="s1q6a"><div class="option-check"></div>Referrals / word of mouth</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s1q6b" name="acq_social" value="Social media (organic)">
+                        <label for="s1q6b"><div class="option-check"></div>Social media (organic)</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s1q6c" name="acq_paid" value="Paid ads (Google, Meta, etc.)">
+                        <label for="s1q6c"><div class="option-check"></div>Paid ads (Google, Meta)</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s1q6d" name="acq_outbound" value="Outbound (cold email, cold calling)">
+                        <label for="s1q6d"><div class="option-check"></div>Outbound (cold outreach)</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s1q6e" name="acq_seo" value="SEO / content marketing">
+                        <label for="s1q6e"><div class="option-check"></div>SEO / content marketing</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s1q6f" name="acq_events" value="Events / networking">
+                        <label for="s1q6f"><div class="option-check"></div>Events / networking</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s1q6g" name="acq_none" value="No consistent source — that's the problem">
+                        <label for="s1q6g"><div class="option-check"></div>No consistent source</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-nav">
+                <button type="button" class="btn-prev" disabled>← Back</button>
+                <button type="button" class="btn-next" onclick="nextStep(1)">Brand & Presence →</button>
+            </div>
+            <div class="step-error" id="error-1">Please fill in your name, email, business name, and industry before continuing.</div>
+        </div>
+
+        <!-- ══════════════ STEP 2: BRAND & PRESENCE ══════════════ -->
+        <div class="step-section" id="step-2">
+            <div class="section-header">
+                <div class="section-tag">Section 2</div>
+                <h2>Brand & Presence</h2>
+                <p>We need to know where you stand before we can say where you're going.</p>
+            </div>
+
+            <!-- Q7: Brand identity -->
+            <div class="card">
+                <div class="question-label">7. How would you describe your current brand and visual identity?</div>
+                <div class="choices" id="s2q7">
+                    <div class="option">
+                        <input type="radio" id="s2q7a" name="brand_identity" value="Strong and consistent — we love how we look">
+                        <label for="s2q7a">
+                            <div class="option-dot"></div>
+                            <div class="option-content">
+                                <strong>Strong and consistent</strong>
+                                <span>We love how we look — it's working</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s2q7b" name="brand_identity" value="Decent but outdated — needs a refresh">
+                        <label for="s2q7b">
+                            <div class="option-dot"></div>
+                            <div class="option-content">
+                                <strong>Decent but outdated</strong>
+                                <span>We have something, but it needs a refresh</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s2q7c" name="brand_identity" value="Inconsistent — looks different everywhere">
+                        <label for="s2q7c">
+                            <div class="option-dot"></div>
+                            <div class="option-content">
+                                <strong>Inconsistent</strong>
+                                <span>Looks different everywhere — no unified identity</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s2q7d" name="brand_identity" value="Non-existent — we haven't built this yet">
+                        <label for="s2q7d">
+                            <div class="option-dot"></div>
+                            <div class="option-content">
+                                <strong>Non-existent</strong>
+                                <span>We haven't built a brand yet</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q8: Website -->
+            <div class="card">
+                <div class="question-label">8. Do you have a website?</div>
+                <div class="choices" id="s2q8">
+                    <div class="option">
+                        <input type="radio" id="s2q8a" name="website_status" value="Yes — current and happy with it">
+                        <label for="s2q8a">
+                            <div class="option-dot"></div>
+                            <div class="option-content">
+                                <strong>Yes — and we're happy with it</strong>
+                                <span>Current, converting, no complaints</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s2q8b" name="website_status" value="Yes — but it needs work (outdated, slow, not converting)">
+                        <label for="s2q8b">
+                            <div class="option-dot"></div>
+                            <div class="option-content">
+                                <strong>Yes — but it needs work</strong>
+                                <span>Outdated, slow, or not converting visitors</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s2q8c" name="website_status" value="No — need one built from scratch">
+                        <label for="s2q8c">
+                            <div class="option-dot"></div>
+                            <div class="option-content">
+                                <strong>No — need one built from scratch</strong>
+                                <span>Starting fresh</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q9 & Q10 -->
+            <div class="card">
+                <div class="question-label" style="margin-bottom:1.2rem;">9. Describe your brand voice in 3 words</div>
+                <div class="field">
+                    <input type="text" name="brand_voice" placeholder="e.g., bold, friendly, expert">
+                </div>
+                <div style="margin-top: 1.5rem;">
+                    <div class="question-label" style="margin-bottom:1.2rem;">10. Who are 1–2 brands whose communication style you admire? <span style="font-weight:400; color:var(--muted); font-size:0.85rem;">(any industry)</span></div>
+                    <div class="field">
+                        <input type="text" name="admired_brands" placeholder="e.g., Apple for clarity, Mailchimp for personality">
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-nav">
+                <button type="button" class="btn-prev" onclick="prevStep(2)">← Back</button>
+                <button type="button" class="btn-next" onclick="nextStep(2)">Marketing & Content →</button>
+            </div>
+            <div class="step-error" id="error-2"></div>
+        </div>
+
+        <!-- ══════════════ STEP 3: MARKETING & CONTENT ══════════════ -->
+        <div class="step-section" id="step-3">
+            <div class="section-header">
+                <div class="section-tag">Section 3</div>
+                <h2>Marketing & Content</h2>
+                <p>What's working, what's not, and what's being ignored.</p>
+            </div>
+
+            <!-- Q11: Content consistency -->
+            <div class="card">
+                <div class="question-label">11. How consistent is your current content output?</div>
+                <div class="choices" id="s3q11">
+                    <div class="option">
+                        <input type="radio" id="s3q11a" name="content_consistency" value="We post regularly and have a system">
+                        <label for="s3q11a">
+                            <div class="option-dot"></div>
+                            <div class="option-content">
+                                <strong>We post regularly and have a system</strong>
+                                <span>Consistent — on schedule, planned ahead</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s3q11b" name="content_consistency" value="We post occasionally when we have time">
+                        <label for="s3q11b">
+                            <div class="option-dot"></div>
+                            <div class="option-content">
+                                <strong>We post occasionally</strong>
+                                <span>When we have time — not systematic</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s3q11c" name="content_consistency" value="We rarely post — it always falls through the cracks">
+                        <label for="s3q11c">
+                            <div class="option-dot"></div>
+                            <div class="option-content">
+                                <strong>We rarely post</strong>
+                                <span>It always falls through the cracks</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s3q11d" name="content_consistency" value="We haven't started content yet">
+                        <label for="s3q11d">
+                            <div class="option-dot"></div>
+                            <div class="option-content">
+                                <strong>We haven't started yet</strong>
+                                <span>Zero content presence right now</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q12: Channels -->
+            <div class="card">
+                <div class="question-label">12. Which channels matter most to your audience? <span style="font-weight:400; color:var(--muted); font-size:0.85rem;">(check all that apply)</span></div>
+                <div class="choices choices-3col" id="s3q12">
+                    <div class="option">
+                        <input type="checkbox" id="s3q12a" name="ch_instagram" value="Instagram">
+                        <label for="s3q12a"><div class="option-check"></div>Instagram</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s3q12b" name="ch_linkedin" value="LinkedIn">
+                        <label for="s3q12b"><div class="option-check"></div>LinkedIn</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s3q12c" name="ch_twitter" value="X / Twitter">
+                        <label for="s3q12c"><div class="option-check"></div>X / Twitter</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s3q12d" name="ch_tiktok" value="TikTok">
+                        <label for="s3q12d"><div class="option-check"></div>TikTok</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s3q12e" name="ch_facebook" value="Facebook">
+                        <label for="s3q12e"><div class="option-check"></div>Facebook</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s3q12f" name="ch_youtube" value="YouTube">
+                        <label for="s3q12f"><div class="option-check"></div>YouTube</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s3q12g" name="ch_email" value="Email newsletter">
+                        <label for="s3q12g"><div class="option-check"></div>Email newsletter</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s3q12h" name="ch_blog" value="Blog / SEO">
+                        <label for="s3q12h"><div class="option-check"></div>Blog / SEO</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s3q12i" name="ch_podcast" value="Podcast">
+                        <label for="s3q12i"><div class="option-check"></div>Podcast</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s3q12j" name="ch_none" value="Figuring this out">
+                        <label for="s3q12j"><div class="option-check"></div>Figuring this out</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q13: Email -->
+            <div class="card">
+                <div class="question-label">13. Do you currently send email newsletters or automated sequences?</div>
+                <div class="choices" id="s3q13">
+                    <div class="option">
+                        <input type="radio" id="s3q13a" name="email_status" value="Yes, and it's working well">
+                        <label for="s3q13a"><div class="option-dot"></div>Yes — and it's working well</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s3q13b" name="email_status" value="Yes, but basic / underperforming">
+                        <label for="s3q13b"><div class="option-dot"></div>Yes — but basic / underperforming</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s3q13c" name="email_status" value="No, but we want to start">
+                        <label for="s3q13c"><div class="option-dot"></div>No — but we want to start</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s3q13d" name="email_status" value="No — not sure if it fits us">
+                        <label for="s3q13d"><div class="option-dot"></div>No — not sure if it fits us</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q14: Content challenge -->
+            <div class="card">
+                <div class="question-label">14. What's your biggest content challenge? <span style="font-weight:400; color:var(--muted); font-size:0.85rem;">(pick one)</span></div>
+                <div class="choices" id="s3q14">
+                    <div class="option">
+                        <input type="radio" id="s3q14a" name="content_challenge" value="No strategy — don't know what to say">
+                        <label for="s3q14a">
+                            <div class="option-dot"></div>
+                            <div class="option-content">
+                                <strong>No strategy</strong>
+                                <span>We don't know what to say or where to focus</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s3q14b" name="content_challenge" value="No time — know what to say but can't create it">
+                        <label for="s3q14b">
+                            <div class="option-dot"></div>
+                            <div class="option-content">
+                                <strong>No time</strong>
+                                <span>We know what to say but can't find time to create it</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s3q14c" name="content_challenge" value="No engagement — content gets no traction">
+                        <label for="s3q14c">
+                            <div class="option-dot"></div>
+                            <div class="option-content">
+                                <strong>No engagement</strong>
+                                <span>We create content but it gets no traction</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s3q14d" name="content_challenge" value="Can't keep up — production speed is the bottleneck">
+                        <label for="s3q14d">
+                            <div class="option-dot"></div>
+                            <div class="option-content">
+                                <strong>Speed / volume</strong>
+                                <span>Can't produce content fast enough to stay consistent</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s3q14e" name="content_challenge" value="Quality — not happy with how content looks or sounds">
+                        <label for="s3q14e">
+                            <div class="option-dot"></div>
+                            <div class="option-content">
+                                <strong>Quality</strong>
+                                <span>Not happy with how it looks or sounds</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-nav">
+                <button type="button" class="btn-prev" onclick="prevStep(3)">← Back</button>
+                <button type="button" class="btn-next" onclick="nextStep(3)">Operations & Automation →</button>
+            </div>
+            <div class="step-error" id="error-3"></div>
+        </div>
+
+        <!-- ══════════════ STEP 4: OPERATIONS & AUTOMATION ══════════════ -->
+        <div class="step-section" id="step-4">
+            <div class="section-header">
+                <div class="section-tag">Section 4</div>
+                <h2>Operations & Automation</h2>
+                <p>Where are you bleeding time and money?</p>
+            </div>
+
+            <!-- Q15: Hours on manual tasks -->
+            <div class="card">
+                <div class="question-label">15. How many hours/week does your team spend on repetitive manual tasks?</div>
+                <div class="question-sub">Data entry, copy-paste, chasing follow-ups, writing same emails, manual reporting</div>
+                <div class="choices" id="s4q15">
+                    <div class="option">
+                        <input type="radio" id="s4q15a" name="manual_hours_weekly" value="Less than 2 hours/week">
+                        <label for="s4q15a">
+                            <div class="option-dot"></div>
+                            <div class="option-content">
+                                <strong>Less than 2 hours/week</strong>
+                                <span>Pretty well automated already</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s4q15b" name="manual_hours_weekly" value="2–5 hours/week">
+                        <label for="s4q15b">
+                            <div class="option-dot"></div>
+                            <div class="option-content">
+                                <strong>2–5 hours/week</strong>
+                                <span>Manageable but room to improve</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s4q15c" name="manual_hours_weekly" value="5–15 hours/week">
+                        <label for="s4q15c">
+                            <div class="option-dot"></div>
+                            <div class="option-content">
+                                <strong>5–15 hours/week</strong>
+                                <span>Significant — this is slowing us down</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s4q15d" name="manual_hours_weekly" value="15+ hours/week — serious drain">
+                        <label for="s4q15d">
+                            <div class="option-dot"></div>
+                            <div class="option-content">
+                                <strong>15+ hours/week 🔴</strong>
+                                <span>This is a serious drain on our capacity</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q16: Manual processes -->
+            <div class="card">
+                <div class="question-label">16. Which manual processes eat the most time? <span style="font-weight:400; color:var(--muted); font-size:0.85rem;">(check all that apply)</span></div>
+                <div class="choices choices-grid" id="s4q16">
+                    <div class="option">
+                        <input type="checkbox" id="s4q16a" name="manual_lead_followup" value="Following up with leads / prospects">
+                        <label for="s4q16a"><div class="option-check"></div>Lead follow-up</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s4q16b" name="manual_cs" value="Customer service / answering same questions">
+                        <label for="s4q16b"><div class="option-check"></div>Customer service / FAQs</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s4q16c" name="manual_reporting" value="Reporting and data collection">
+                        <label for="s4q16c"><div class="option-check"></div>Reporting / data collection</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s4q16d" name="manual_scheduling" value="Scheduling and booking">
+                        <label for="s4q16d"><div class="option-check"></div>Scheduling / booking</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s4q16e" name="manual_onboarding" value="Onboarding new clients">
+                        <label for="s4q16e"><div class="option-check"></div>Client onboarding</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s4q16f" name="manual_billing" value="Invoice and billing management">
+                        <label for="s4q16f"><div class="option-check"></div>Invoice / billing</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s4q16g" name="manual_social" value="Social media posting">
+                        <label for="s4q16g"><div class="option-check"></div>Social media posting</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s4q16h" name="manual_internal" value="Internal team communication and project tracking">
+                        <label for="s4q16h"><div class="option-check"></div>Internal comms / PM</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q17: CRM -->
+            <div class="card">
+                <div class="question-label">17. Do you use a CRM (customer relationship management system)?</div>
+                <div class="choices" id="s4q17">
+                    <div class="option">
+                        <input type="radio" id="s4q17a" name="crm_status" value="Yes — actively using a CRM" data-show-crm="true">
+                        <label for="s4q17a">
+                            <div class="option-dot"></div>
+                            <div class="option-content">
+                                <strong>Yes — actively using it</strong>
+                                <span>It's set up and in use daily</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s4q17b" name="crm_status" value="Yes — but not set up properly / barely used">
+                        <label for="s4q17b">
+                            <div class="option-dot"></div>
+                            <div class="option-content">
+                                <strong>Yes — but barely used</strong>
+                                <span>We have it, not set up right</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s4q17c" name="crm_status" value="No — leads tracked in spreadsheets or email">
+                        <label for="s4q17c">
+                            <div class="option-dot"></div>
+                            <div class="option-content">
+                                <strong>No — using spreadsheets or email</strong>
+                                <span>Manual tracking, no dedicated system</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s4q17d" name="crm_status" value="No — no system for tracking leads at all">
+                        <label for="s4q17d">
+                            <div class="option-dot"></div>
+                            <div class="option-content">
+                                <strong>No system at all</strong>
+                                <span>Leads are not tracked systematically</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                <div id="crm-name-wrap" style="display:none; margin-top:0.8rem;">
+                    <input type="text" name="crm_name" placeholder="Which CRM? (e.g. HubSpot, Go High Level, Salesforce)" class="inline-input">
+                </div>
+            </div>
+
+            <!-- Q18: Tech stack -->
+            <div class="card">
+                <div class="question-label">18. What's your current tech stack? <span style="font-weight:400; color:var(--muted); font-size:0.85rem;">(check all you use)</span></div>
+                <div class="choices choices-3col" id="s4q18">
+                    <div class="option">
+                        <input type="checkbox" id="s4q18a" name="tech_hubspot" value="HubSpot">
+                        <label for="s4q18a"><div class="option-check"></div>HubSpot</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s4q18b" name="tech_ghl" value="Go High Level">
+                        <label for="s4q18b"><div class="option-check"></div>Go High Level</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s4q18c" name="tech_salesforce" value="Salesforce">
+                        <label for="s4q18c"><div class="option-check"></div>Salesforce</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s4q18d" name="tech_notion" value="Notion">
+                        <label for="s4q18d"><div class="option-check"></div>Notion</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s4q18e" name="tech_airtable" value="Airtable">
+                        <label for="s4q18e"><div class="option-check"></div>Airtable</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s4q18f" name="tech_zapier" value="Zapier / Make.com">
+                        <label for="s4q18f"><div class="option-check"></div>Zapier / Make.com</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s4q18g" name="tech_slack" value="Slack / Teams">
+                        <label for="s4q18g"><div class="option-check"></div>Slack / Teams</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s4q18h" name="tech_email_mktg" value="Email marketing tool (Mailchimp, Klaviyo, etc.)">
+                        <label for="s4q18h"><div class="option-check"></div>Email marketing tool</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s4q18i" name="tech_ecomm" value="Shopify / WooCommerce">
+                        <label for="s4q18i"><div class="option-check"></div>Shopify / WooCommerce</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s4q18j" name="tech_accounting" value="QuickBooks / Xero">
+                        <label for="s4q18j"><div class="option-check"></div>QuickBooks / Xero</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s4q18k" name="tech_none" value="None of the above">
+                        <label for="s4q18k"><div class="option-check"></div>None of the above</label>
+                    </div>
+                </div>
+                <div style="margin-top: 0.8rem;">
+                    <input type="text" name="tech_other" placeholder="Other tools? List them here..." class="inline-input">
+                </div>
+            </div>
+
+            <!-- Q19: Automation experience -->
+            <div class="card">
+                <div class="question-label">19. Have you tried building automations before?</div>
+                <div class="choices" id="s4q19">
+                    <div class="option">
+                        <input type="radio" id="s4q19a" name="automation_experience" value="Yes — we have automations running">
+                        <label for="s4q19a"><div class="option-dot"></div>Yes — we have automations running</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s4q19b" name="automation_experience" value="Yes — tried but it didn't stick">
+                        <label for="s4q19b"><div class="option-dot"></div>Yes — we tried but it didn't stick</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s4q19c" name="automation_experience" value="No — but we're ready to start">
+                        <label for="s4q19c"><div class="option-dot"></div>No — but we're ready to start</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s4q19d" name="automation_experience" value="No — not sure where to start">
+                        <label for="s4q19d"><div class="option-dot"></div>No — not sure where to start</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-nav">
+                <button type="button" class="btn-prev" onclick="prevStep(4)">← Back</button>
+                <button type="button" class="btn-next" onclick="nextStep(4)">Goals & Budget →</button>
+            </div>
+            <div class="step-error" id="error-4"></div>
+        </div>
+
+        <!-- ══════════════ STEP 5: GOALS & BUDGET ══════════════ -->
+        <div class="step-section" id="step-5">
+            <div class="section-header">
+                <div class="section-tag">Section 5</div>
+                <h2>Goals & Budget</h2>
+                <p>What does success look like, and what are you willing to invest?</p>
+            </div>
+
+            <!-- Q20: Goals -->
+            <div class="card">
+                <div class="question-label">20. What are your top goals for the next 6 months? <span style="font-weight:400; color:var(--muted); font-size:0.85rem;">(select up to 3)</span></div>
+                <div class="choices choices-grid" id="s5q20">
+                    <div class="option">
+                        <input type="checkbox" id="s5q20a" name="goal_leads" value="Generate more leads" class="goal-checkbox">
+                        <label for="s5q20a"><div class="option-check"></div>Generate more leads</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s5q20b" name="goal_brand" value="Increase brand visibility" class="goal-checkbox">
+                        <label for="s5q20b"><div class="option-check"></div>Increase brand visibility</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s5q20c" name="goal_automate" value="Save time by automating manual work" class="goal-checkbox">
+                        <label for="s5q20c"><div class="option-check"></div>Automate manual work</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s5q20d" name="goal_website" value="Launch or rebuild website" class="goal-checkbox">
+                        <label for="s5q20d"><div class="option-check"></div>Launch / rebuild website</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s5q20e" name="goal_content" value="Establish consistent content presence" class="goal-checkbox">
+                        <label for="s5q20e"><div class="option-check"></div>Consistent content presence</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s5q20f" name="goal_ops" value="Build a better internal operating system" class="goal-checkbox">
+                        <label for="s5q20f"><div class="option-check"></div>Better internal OS</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s5q20g" name="goal_product" value="Launch a digital product or course" class="goal-checkbox">
+                        <label for="s5q20g"><div class="option-check"></div>Launch digital product</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="s5q20h" name="goal_cx" value="Improve customer experience / reduce CS load" class="goal-checkbox">
+                        <label for="s5q20h"><div class="option-check"></div>Improve customer experience</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q21: Success metric -->
+            <div class="card">
+                <div class="question-label">21. What's your primary success metric?</div>
+                <div class="question-sub">How will you know it worked?</div>
+                <div class="choices choices-grid" id="s5q21">
+                    <div class="option">
+                        <input type="radio" id="s5q21a" name="success_metric" value="More leads / inquiries">
+                        <label for="s5q21a"><div class="option-dot"></div>More leads / inquiries</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s5q21b" name="success_metric" value="More revenue">
+                        <label for="s5q21b"><div class="option-dot"></div>More revenue</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s5q21c" name="success_metric" value="Hours saved per week">
+                        <label for="s5q21c"><div class="option-dot"></div>Hours saved per week</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s5q21d" name="success_metric" value="More social followers / engagement">
+                        <label for="s5q21d"><div class="option-dot"></div>Social growth / engagement</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s5q21e" name="success_metric" value="A finished product / system I'm proud of">
+                        <label for="s5q21e"><div class="option-dot"></div>A product/system I'm proud of</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s5q21f" name="success_metric" value="Consistent content output">
+                        <label for="s5q21f"><div class="option-dot"></div>Consistent content output</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q22: Budget -->
+            <div class="card">
+                <div class="question-label">22. Monthly budget for marketing + automation support?</div>
+                <div class="choices" id="s5q22">
+                    <div class="option">
+                        <input type="radio" id="s5q22a" name="monthly_budget" value="Under $500/mo — need to start small">
+                        <label for="s5q22a">
+                            <div class="option-dot"></div>
+                            <div class="option-content">
+                                <strong>Under $500/mo</strong>
+                                <span>Need to start small and prove ROI first</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s5q22b" name="monthly_budget" value="$500–$1,500/mo">
+                        <label for="s5q22b">
+                            <div class="option-dot"></div>
+                            <div class="option-content">
+                                <strong>$500–$1,500/mo</strong>
+                                <span>Starter investment, want results</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s5q22c" name="monthly_budget" value="$1,500–$3,500/mo">
+                        <label for="s5q22c">
+                            <div class="option-dot"></div>
+                            <div class="option-content">
+                                <strong>$1,500–$3,500/mo</strong>
+                                <span>Serious about growth</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s5q22d" name="monthly_budget" value="$3,500–$7,000/mo">
+                        <label for="s5q22d">
+                            <div class="option-dot"></div>
+                            <div class="option-content">
+                                <strong>$3,500–$7,000/mo</strong>
+                                <span>Full growth engine</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s5q22e" name="monthly_budget" value="$7,000+/mo — budget isn't the main constraint">
+                        <label for="s5q22e">
+                            <div class="option-dot"></div>
+                            <div class="option-content">
+                                <strong>$7,000+/mo</strong>
+                                <span>Budget isn't the constraint — results are</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s5q22f" name="monthly_budget" value="Open to a one-time project (not monthly)">
+                        <label for="s5q22f">
+                            <div class="option-dot"></div>
+                            <div class="option-content">
+                                <strong>One-time project</strong>
+                                <span>Not looking for ongoing retainer</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q23: Agency experience -->
+            <div class="card">
+                <div class="question-label">23. Have you worked with an agency or freelancer before?</div>
+                <div class="choices" id="s5q23">
+                    <div class="option">
+                        <input type="radio" id="s5q23a" name="agency_experience" value="Yes — and it worked well">
+                        <label for="s5q23a"><div class="option-dot"></div>Yes — and it worked well</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s5q23b" name="agency_experience" value="Yes — and it was disappointing" data-show-agency="true">
+                        <label for="s5q23b"><div class="option-dot"></div>Yes — and it was disappointing</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s5q23c" name="agency_experience" value="No — this would be our first time">
+                        <label for="s5q23c"><div class="option-dot"></div>No — first time working with an agency</label>
+                    </div>
+                </div>
+                <div id="agency-why-wrap" style="display:none; margin-top:0.8rem;">
+                    <label style="font-size:0.8rem; color:var(--muted); display:block; margin-bottom:0.4rem;">What went wrong? (helps us avoid the same mistakes)</label>
+                    <textarea name="agency_disappointment" placeholder="e.g., They overpromised and underdelivered, no communication, too generic..." rows="3" style="width:100%; background:var(--bg); border:1.5px solid var(--border); color:var(--text); padding:0.8rem 1rem; border-radius:10px; font-family:inherit; font-size:0.88rem; resize:vertical; outline:none;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'"></textarea>
+                </div>
+            </div>
+
+            <!-- Q24: Decision-making -->
+            <div class="card">
+                <div class="question-label">24. What's your decision-making process?</div>
+                <div class="choices" id="s5q24">
+                    <div class="option">
+                        <input type="radio" id="s5q24a" name="decision_process" value="Just me — I can move fast">
+                        <label for="s5q24a">
+                            <div class="option-dot"></div>
+                            <div class="option-content">
+                                <strong>Just me</strong>
+                                <span>I'm the decision-maker — can move fast</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s5q24b" name="decision_process" value="Me + one other stakeholder">
+                        <label for="s5q24b">
+                            <div class="option-dot"></div>
+                            <div class="option-content">
+                                <strong>Me + one other person</strong>
+                                <span>Small group, quick to align</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s5q24c" name="decision_process" value="Requires team/board approval — takes time">
+                        <label for="s5q24c">
+                            <div class="option-dot"></div>
+                            <div class="option-content">
+                                <strong>Team / board approval needed</strong>
+                                <span>Multiple stakeholders — takes time</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="s5q24d" name="decision_process" value="I'm researching for someone else">
+                        <label for="s5q24d">
+                            <div class="option-dot"></div>
+                            <div class="option-content">
+                                <strong>Researching for someone else</strong>
+                                <span>I'm gathering info for another decision-maker</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q25: Anything else -->
+            <div class="card">
+                <div class="question-label">25. Anything else we should know?</div>
+                <div class="question-sub">Context, constraints, dealbreakers, must-haves, or anything that didn't fit above</div>
+                <div class="field">
+                    <textarea name="additional_context" placeholder="e.g., 'We've had two failed website projects, so we need regular check-ins. Budget is flexible if the ROI is clear. Must have experience with e-commerce brands...'" rows="5"></textarea>
+                </div>
+            </div>
+
+            <!-- Final Submit -->
+            <div style="display:flex; flex-direction:column; align-items:center; gap:1rem; margin-top:2rem; padding-top:1.5rem; border-top: 1px solid var(--border);">
+                <div style="display:flex; gap:1rem; width:100%; justify-content:space-between; align-items:center; flex-wrap:wrap;">
+                    <button type="button" class="btn-prev" onclick="prevStep(5)">← Back</button>
+                    <button type="submit" class="btn-submit-final" id="submit-btn">
+                        <span id="submit-text">Submit Discovery →</span>
+                        <span class="spinner" id="submit-spinner"></span>
+                    </button>
+                </div>
+                <p style="font-size:0.8rem; color:var(--muted); text-align:center;">🔒 No spam. We review every submission personally and respond within 24 hours.</p>
+                <div class="step-error" id="error-5" style="width:100%;"></div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Thank You Screen -->
+<div id="thank-you" style="display:none; min-height:100vh;">
+    <div class="ty-card">
+        <div class="ty-icon">🛡️</div>
+        <h2>Discovery complete!</h2>
+        <p class="ty-main">Your full discovery has been submitted to the Aegus team.</p>
+        <div class="ty-timer">⏱️ We'll get back to you within 24 hours with a detailed, personalized recommendation — no generic advice, just the right fit.</div>
+        <p class="ty-sub">Check your inbox. We'll send a summary of your answers and our initial assessment.</p>
+        <div class="ty-btns">
+            <a href="/" class="ty-btn-primary">← Back to Aegus</a>
+            <a href="intake.html" class="ty-btn-secondary">Quick Assessment</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    var currentStep = 1;
+    var totalSteps = 5;
+
+    var sectionLabels = [
+        'Section 1: Your Business',
+        'Section 2: Brand & Presence',
+        'Section 3: Marketing & Content',
+        'Section 4: Operations & Automation',
+        'Section 5: Goals & Budget'
+    ];
+
+    function updateProgress(step) {
+        var pct = (step / totalSteps) * 100;
+        document.getElementById('progress-fill').style.width = pct + '%';
+        document.getElementById('progress-label').textContent = sectionLabels[step - 1];
+        document.getElementById('progress-steps').textContent = 'Step ' + step + ' of ' + totalSteps;
+
+        for (var i = 1; i <= totalSteps; i++) {
+            var dot = document.getElementById('dot-' + i);
+            dot.className = 'step-dot';
+            if (i < step) dot.className += ' done';
+            else if (i === step) dot.className += ' active';
+        }
+    }
+
+    function showStep(step, direction) {
+        document.getElementById('step-' + currentStep).classList.remove('active');
+        var next = document.getElementById('step-' + step);
+        next.classList.add('active');
+        if (direction === 'forward') {
+            next.style.animation = 'fadeLeft 0.35s ease both';
+        } else {
+            next.style.animation = 'fadeRight 0.35s ease both';
+        }
+        currentStep = step;
+        updateProgress(step);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function validateStep1() {
+        var name = document.getElementById('d-name').value.trim();
+        var email = document.getElementById('d-email').value.trim();
+        var bizName = document.getElementById('biz-name').value.trim();
+        var industry = document.getElementById('biz-industry').value.trim();
+        return name && email && bizName && industry;
+    }
+
+    function nextStep(from) {
+        var errorEl = document.getElementById('error-' + from);
+        errorEl.style.display = 'none';
+
+        if (from === 1 && !validateStep1()) {
+            errorEl.textContent = 'Please fill in your name, email, business name, and industry before continuing.';
+            errorEl.style.display = 'block';
+            return;
+        }
+
+        if (from < totalSteps) {
+            showStep(from + 1, 'forward');
+        }
+    }
+
+    function prevStep(from) {
+        if (from > 1) {
+            showStep(from - 1, 'back');
+        }
+    }
+
+    // CRM name show/hide
+    document.querySelectorAll('input[name="crm_status"]').forEach(function(input) {
+        input.addEventListener('change', function() {
+            var wrap = document.getElementById('crm-name-wrap');
+            wrap.style.display = this.getAttribute('data-show-crm') ? 'block' : 'none';
+        });
+    });
+
+    // Agency disappointment show/hide
+    document.querySelectorAll('input[name="agency_experience"]').forEach(function(input) {
+        input.addEventListener('change', function() {
+            var wrap = document.getElementById('agency-why-wrap');
+            wrap.style.display = this.getAttribute('data-show-agency') ? 'block' : 'none';
+        });
+    });
+
+    // Goal checkboxes — max 3
+    document.querySelectorAll('.goal-checkbox').forEach(function(cb) {
+        cb.addEventListener('change', function() {
+            var checked = document.querySelectorAll('.goal-checkbox:checked');
+            if (checked.length > 3) {
+                this.checked = false;
+            }
+        });
+    });
+
+    // Form submission
+    document.getElementById('discovery-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        var errorEl = document.getElementById('error-5');
+        var btn = document.getElementById('submit-btn');
+        var submitText = document.getElementById('submit-text');
+        var spinner = document.getElementById('submit-spinner');
+
+        // Basic validation for Step 5
+        if (!document.getElementById('d-name').value.trim() ||
+            !document.getElementById('d-email').value.trim()) {
+            errorEl.textContent = 'Please make sure your name and email are filled in.';
+            errorEl.style.display = 'block';
+            return;
+        }
+
+        errorEl.style.display = 'none';
+        btn.disabled = true;
+        submitText.textContent = 'Submitting...';
+        spinner.style.display = 'inline-block';
+
+        var formData = new FormData(this);
+
+        try {
+            var response = await fetch('https://formsubmit.co/ajax/aegus@agentmail.to', {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            });
+            showThankYou();
+        } catch (err) {
+            showThankYou();
+        }
+    });
+
+    function showThankYou() {
+        document.getElementById('form-wrapper').style.display = 'none';
+        document.querySelector('.progress-bar-wrapper').style.display = 'none';
+        var ty = document.getElementById('thank-you');
+        ty.style.display = 'flex';
+        ty.style.alignItems = 'center';
+        ty.style.justifyContent = 'center';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Init
+    updateProgress(1);
+</script>
+</body>
+</html>

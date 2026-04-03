@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick AI Assessment — Aegus Digital Agency</title>
+    <meta name="description" content="2-minute assessment to find your perfect AI solution. Tell us about your business and we'll respond within 24 hours.">
+    <style>
+        :root {
+            --bg: #0F1729;
+            --bg-card: #1A2332;
+            --border: #2A3444;
+            --accent: #00D4AA;
+            --accent-glow: rgba(0, 212, 170, 0.15);
+            --secondary: #FF6B8A;
+            --muted: #8B95A5;
+            --text: #E8ECF1;
+            --white: #FFFFFF;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ── Nav ── */
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 100;
+            background: rgba(15, 23, 41, 0.92);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo {
+            font-size: 1.3rem; font-weight: 800; letter-spacing: -0.5px;
+            background: linear-gradient(135deg, var(--accent), #00F5C8);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+        .logo span { font-weight: 400; opacity: 0.7; -webkit-text-fill-color: var(--muted); }
+        .nav-back {
+            color: var(--muted); text-decoration: none; font-size: 0.88rem;
+            display: flex; align-items: center; gap: 0.4rem;
+            transition: color 0.2s;
+        }
+        .nav-back:hover { color: var(--accent); }
+
+        /* ── Hero ── */
+        .hero {
+            padding: 7rem 2rem 3rem;
+            text-align: center;
+            background: radial-gradient(ellipse at 50% 0%, rgba(0, 212, 170, 0.07) 0%, transparent 60%);
+        }
+        .badge {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: var(--accent-glow); border: 1px solid rgba(0, 212, 170, 0.3);
+            padding: 0.35rem 1rem; border-radius: 50px; font-size: 0.78rem;
+            color: var(--accent); margin-bottom: 1.5rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800;
+            line-height: 1.15; margin-bottom: 1rem;
+        }
+        .hero h1 .gradient {
+            background: linear-gradient(135deg, var(--accent), #00F5C8, var(--secondary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            color: var(--muted); font-size: 1.05rem; max-width: 520px;
+            margin: 0 auto 1.5rem;
+        }
+        .hero-meta {
+            display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;
+            font-size: 0.82rem; color: var(--muted);
+        }
+        .hero-meta span { display: flex; align-items: center; gap: 0.4rem; }
+        .hero-meta span::before { content: '✓'; color: var(--accent); font-weight: 700; }
+
+        /* ── Form Container ── */
+        .form-container {
+            max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 6rem;
+        }
+
+        /* ── Cards ── */
+        .card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 16px; padding: 2rem;
+            margin-bottom: 1.5rem;
+            animation: fadeUp 0.4s ease both;
+        }
+        .card:nth-child(1) { animation-delay: 0.05s; }
+        .card:nth-child(2) { animation-delay: 0.1s; }
+        .card:nth-child(3) { animation-delay: 0.15s; }
+        .card:nth-child(4) { animation-delay: 0.2s; }
+        .card:nth-child(5) { animation-delay: 0.25s; }
+        .card:nth-child(6) { animation-delay: 0.3s; }
+        .card:nth-child(7) { animation-delay: 0.35s; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── Contact Section ── */
+        .card-title {
+            font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem;
+        }
+        .field-row {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .field { display: flex; flex-direction: column; gap: 0.4rem; }
+        .field label {
+            font-size: 0.82rem; font-weight: 600; color: var(--muted);
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .field input, .field textarea {
+            background: var(--bg); border: 1.5px solid var(--border);
+            color: var(--text); padding: 0.75rem 1rem;
+            border-radius: 10px; font-size: 0.95rem; font-family: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s; outline: none;
+            width: 100%;
+        }
+        .field input:focus, .field textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+        .field input::placeholder, .field textarea::placeholder { color: var(--muted); opacity: 0.7; }
+
+        /* ── Question Number ── */
+        .question-num {
+            font-size: 2.5rem; font-weight: 800; line-height: 1;
+            background: linear-gradient(135deg, var(--accent), transparent);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            opacity: 0.5; margin-bottom: 0.5rem;
+        }
+        .question-title {
+            font-size: 1.2rem; font-weight: 700; margin-bottom: 0.3rem;
+        }
+        .question-sub {
+            font-size: 0.85rem; color: var(--muted); margin-bottom: 1.5rem;
+        }
+
+        /* ── Option Cards ── */
+        .choices { display: flex; flex-direction: column; gap: 0.6rem; }
+        .choices-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.6rem;
+        }
+
+        .option { position: relative; }
+        .option input[type="radio"],
+        .option input[type="checkbox"] {
+            position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none;
+        }
+        .option label {
+            display: flex; align-items: flex-start; gap: 12px;
+            padding: 14px 16px; background: var(--bg);
+            border: 1.5px solid var(--border); border-radius: 12px;
+            cursor: pointer; transition: all 0.2s ease;
+            user-select: none; width: 100%;
+        }
+        .option label:hover {
+            border-color: rgba(0, 212, 170, 0.4);
+            background: rgba(0, 212, 170, 0.03);
+        }
+        .option input[type="radio"]:checked + label,
+        .option input[type="checkbox"]:checked + label {
+            border-color: var(--accent);
+            background: rgba(0, 212, 170, 0.08);
+        }
+
+        .option-dot {
+            width: 18px; height: 18px; border-radius: 50%;
+            border: 2px solid var(--border); flex-shrink: 0;
+            margin-top: 2px; transition: all 0.2s; position: relative;
+        }
+        .option input[type="radio"]:checked + label .option-dot {
+            border-color: var(--accent); background: var(--accent);
+        }
+        .option input[type="radio"]:checked + label .option-dot::after {
+            content: ''; position: absolute;
+            top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 6px; height: 6px; background: var(--bg); border-radius: 50%;
+        }
+        .option-check {
+            width: 18px; height: 18px; border-radius: 5px;
+            border: 2px solid var(--border); flex-shrink: 0;
+            margin-top: 2px; transition: all 0.2s; position: relative;
+        }
+        .option input[type="checkbox"]:checked + label .option-check {
+            border-color: var(--accent); background: var(--accent);
+        }
+        .option input[type="checkbox"]:checked + label .option-check::after {
+            content: '✓'; position: absolute;
+            top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-size: 11px; color: var(--bg); font-weight: 700;
+        }
+        .option-text { display: flex; flex-direction: column; gap: 2px; }
+        .option-text strong { font-size: 0.95rem; color: var(--white); }
+        .option-text span { font-size: 0.82rem; color: var(--muted); }
+
+        /* For grid options, center content */
+        .choices-grid .option-text { flex-direction: row; align-items: center; }
+        .choices-grid .option-text strong { font-size: 0.9rem; }
+
+        /* ── Textarea ── */
+        .win-textarea {
+            width: 100%;
+            background: var(--bg); border: 1.5px solid var(--border);
+            color: var(--text); padding: 1rem 1.2rem;
+            border-radius: 12px; font-size: 0.95rem; font-family: inherit;
+            resize: vertical; min-height: 130px;
+            transition: border-color 0.2s, box-shadow 0.2s; outline: none;
+            line-height: 1.6;
+        }
+        .win-textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+        .win-textarea::placeholder { color: var(--muted); opacity: 0.6; }
+
+        /* Other field */
+        .other-input {
+            margin-top: 0.6rem;
+            background: var(--bg); border: 1.5px solid var(--border);
+            color: var(--text); padding: 0.65rem 1rem;
+            border-radius: 10px; font-size: 0.9rem; font-family: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s; outline: none;
+            width: 100%;
+        }
+        .other-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        /* ── Submit ── */
+        .submit-area { text-align: center; margin-top: 2.5rem; }
+        .btn-submit {
+            background: var(--accent); color: var(--bg);
+            padding: 1rem 2.5rem; border-radius: 12px;
+            font-size: 1.05rem; font-weight: 700; border: none;
+            cursor: pointer; transition: all 0.2s;
+            box-shadow: 0 4px 24px var(--accent-glow);
+            display: inline-flex; align-items: center; gap: 0.5rem;
+        }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,212,170,0.35); }
+        .btn-submit:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+        .submit-note {
+            margin-top: 1rem; font-size: 0.82rem; color: var(--muted);
+        }
+        .submit-deep {
+            margin-top: 0.5rem; font-size: 0.82rem; color: var(--muted);
+        }
+        .submit-deep a { color: var(--accent); text-decoration: none; }
+        .submit-deep a:hover { text-decoration: underline; }
+
+        /* Spinner */
+        .spinner {
+            width: 16px; height: 16px;
+            border: 2px solid rgba(15,23,41,0.3);
+            border-top-color: var(--bg);
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ── Thank You ── */
+        #thank-you {
+            min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            padding: 2rem;
+            background: radial-gradient(ellipse at 50% 40%, rgba(0,212,170,0.07) 0%, transparent 60%);
+        }
+        .ty-card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 20px; padding: 3.5rem 3rem; max-width: 520px; width: 100%;
+            text-align: center; animation: fadeUp 0.5s ease;
+        }
+        .ty-icon {
+            font-size: 3.5rem; margin-bottom: 1.5rem;
+            animation: bounceIn 0.6s ease;
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            70% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .ty-card h2 {
+            font-size: 1.8rem; font-weight: 800; margin-bottom: 1rem;
+        }
+        .ty-card .ty-main {
+            font-size: 1.05rem; color: var(--text); margin-bottom: 0.7rem;
+        }
+        .ty-card .ty-sub {
+            font-size: 0.88rem; color: var(--muted); margin-bottom: 2rem;
+        }
+        .ty-card .ty-sub a { color: var(--accent); text-decoration: none; }
+        .ty-card .ty-sub a:hover { text-decoration: underline; }
+        .ty-card .ty-timer {
+            background: var(--accent-glow); border: 1px solid rgba(0,212,170,0.2);
+            border-radius: 10px; padding: 1rem 1.5rem; margin-bottom: 2rem;
+            font-size: 0.88rem; color: var(--accent);
+        }
+        .ty-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .ty-btn-primary {
+            background: var(--accent); color: var(--bg);
+            padding: 0.8rem 1.8rem; border-radius: 10px; font-weight: 700;
+            font-size: 0.95rem; text-decoration: none; transition: all 0.2s;
+        }
+        .ty-btn-primary:hover { transform: translateY(-1px); }
+        .ty-btn-secondary {
+            background: transparent; color: var(--text);
+            padding: 0.8rem 1.8rem; border-radius: 10px; font-weight: 600;
+            font-size: 0.95rem; text-decoration: none; border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+        .ty-btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* Error message */
+        .error-msg {
+            background: rgba(255, 107, 138, 0.1); border: 1px solid rgba(255, 107, 138, 0.3);
+            color: var(--secondary); padding: 0.7rem 1rem; border-radius: 8px;
+            font-size: 0.85rem; margin-top: 0.8rem; display: none;
+        }
+
+        /* ── Mobile ── */
+        @media (max-width: 600px) {
+            .field-row { grid-template-columns: 1fr; }
+            .choices-grid { grid-template-columns: 1fr; }
+            .card { padding: 1.5rem; }
+            .ty-card { padding: 2.5rem 1.5rem; }
+            .ty-btns { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="/" class="logo">AEGUS <span>digital</span></a>
+    <a href="/" class="nav-back">← Back to Site</a>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+    <div class="badge">⚡ Quick Assessment</div>
+    <h1>Find Your Perfect<br><span class="gradient">AI Solution</span></h1>
+    <p>Answer 5 questions and we'll match you with the right Aegus package — no fluff, just the right fit.</p>
+    <div class="hero-meta">
+        <span>Takes 2 minutes</span>
+        <span>No sales calls required</span>
+        <span>Response within 24 hours</span>
+    </div>
+</div>
+
+<!-- Form Wrapper -->
+<div class="form-container" id="form-wrapper">
+    <form id="intake-form" novalidate>
+        <!-- FormSubmit config -->
+        <input type="hidden" name="_subject" value="🛡️ New Quick Assessment — Aegus Digital Agency">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="table">
+
+        <!-- Contact Info -->
+        <div class="card">
+            <div class="card-title">👋 Tell us about yourself</div>
+            <div class="field-row">
+                <div class="field">
+                    <label for="name">Your Name *</label>
+                    <input type="text" id="name" name="name" placeholder="Jane Smith" required>
+                </div>
+                <div class="field">
+                    <label for="business_name">Business Name *</label>
+                    <input type="text" id="business_name" name="business_name" placeholder="Acme Corp" required>
+                </div>
+            </div>
+            <div class="field">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" name="email" placeholder="jane@acme.com" required>
+            </div>
+        </div>
+
+        <!-- Q1 -->
+        <div class="card">
+            <div class="question-num">01</div>
+            <div class="question-title">What's your biggest bottleneck right now?</div>
+            <div class="question-sub">Pick the one that stings most</div>
+            <div class="choices" id="q1-choices">
+                <div class="option">
+                    <input type="radio" id="q1a" name="biggest_bottleneck" value="Content & Marketing — inconsistent posting and marketing" required>
+                    <label for="q1a">
+                        <div class="option-dot"></div>
+                        <div class="option-text">
+                            <strong>Content & Marketing</strong>
+                            <span>We don't have enough content / our marketing is inconsistent</span>
+                        </div>
+                    </label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q1b" name="biggest_bottleneck" value="Brand & Website — we look unprofessional online">
+                    <label for="q1b">
+                        <div class="option-dot"></div>
+                        <div class="option-text">
+                            <strong>Brand & Website</strong>
+                            <span>We look unprofessional — our brand/website doesn't reflect who we are</span>
+                        </div>
+                    </label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q1c" name="biggest_bottleneck" value="Manual Tasks — drowning in repetitive work">
+                    <label for="q1c">
+                        <div class="option-dot"></div>
+                        <div class="option-text">
+                            <strong>Manual Tasks</strong>
+                            <span>We're drowning in manual tasks and repetitive work</span>
+                        </div>
+                    </label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q1d" name="biggest_bottleneck" value="Leads & Sales — not enough leads, poor follow-up">
+                    <label for="q1d">
+                        <div class="option-dot"></div>
+                        <div class="option-text">
+                            <strong>Leads & Sales</strong>
+                            <span>We're not getting enough leads / our sales follow-up is a mess</span>
+                        </div>
+                    </label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q1e" name="biggest_bottleneck" value="Starting from Scratch — need a completely new digital system">
+                    <label for="q1e">
+                        <div class="option-dot"></div>
+                        <div class="option-text">
+                            <strong>Starting from Scratch</strong>
+                            <span>We need a completely new digital system — we're building from zero</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="card">
+            <div class="question-num">02</div>
+            <div class="question-title">Monthly spend on marketing & operations?</div>
+            <div class="question-sub">Staff, tools, agencies, and freelancers combined</div>
+            <div class="choices choices-grid" id="q2-choices">
+                <div class="option">
+                    <input type="radio" id="q2a" name="monthly_spend" value="Under $500/mo" required>
+                    <label for="q2a">
+                        <div class="option-dot"></div>
+                        <div class="option-text"><strong>Under $500/mo</strong></div>
+                    </label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q2b" name="monthly_spend" value="$500–$2,000/mo">
+                    <label for="q2b">
+                        <div class="option-dot"></div>
+                        <div class="option-text"><strong>$500–$2,000/mo</strong></div>
+                    </label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q2c" name="monthly_spend" value="$2,000–$7,000/mo">
+                    <label for="q2c">
+                        <div class="option-dot"></div>
+                        <div class="option-text"><strong>$2,000–$7,000/mo</strong></div>
+                    </label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q2d" name="monthly_spend" value="$7,000+/mo">
+                    <label for="q2d">
+                        <div class="option-dot"></div>
+                        <div class="option-text"><strong>$7,000+/mo</strong></div>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="card">
+            <div class="question-num">03</div>
+            <div class="question-title">What's your timeline?</div>
+            <div class="question-sub">When do you need results?</div>
+            <div class="choices" id="q3-choices">
+                <div class="option">
+                    <input type="radio" id="q3a" name="timeline" value="Urgent — needed yesterday" required>
+                    <label for="q3a">
+                        <div class="option-dot"></div>
+                        <div class="option-text">
+                            <strong>Urgent 🔥</strong>
+                            <span>I needed this yesterday</span>
+                        </div>
+                    </label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q3b" name="timeline" value="Next 30 days">
+                    <label for="q3b">
+                        <div class="option-dot"></div>
+                        <div class="option-text">
+                            <strong>Next 30 Days</strong>
+                            <span>Moving fast, want to start soon</span>
+                        </div>
+                    </label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q3c" name="timeline" value="Next 90 days — want to plan properly">
+                    <label for="q3c">
+                        <div class="option-dot"></div>
+                        <div class="option-text">
+                            <strong>Next 90 Days</strong>
+                            <span>I want to plan properly and do this right</span>
+                        </div>
+                    </label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q3d" name="timeline" value="Exploring — no hard deadline">
+                    <label for="q3d">
+                        <div class="option-dot"></div>
+                        <div class="option-text">
+                            <strong>Just Exploring</strong>
+                            <span>No hard deadline — gathering information</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="card">
+            <div class="question-num">04</div>
+            <div class="question-title">What type of business are you?</div>
+            <div class="question-sub">This helps us tailor our recommendation</div>
+            <div class="choices" id="q4-choices">
+                <div class="option">
+                    <input type="radio" id="q4a" name="business_type" value="Service Business — local (medical, legal, home services, real estate)" required>
+                    <label for="q4a">
+                        <div class="option-dot"></div>
+                        <div class="option-text">
+                            <strong>Service Business</strong>
+                            <span>Local services: medical, legal, home services, real estate</span>
+                        </div>
+                    </label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q4b" name="business_type" value="Agency or Consultancy">
+                    <label for="q4b">
+                        <div class="option-dot"></div>
+                        <div class="option-text">
+                            <strong>Agency or Consultancy</strong>
+                            <span>We sell expertise and services to other businesses</span>
+                        </div>
+                    </label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q4c" name="business_type" value="E-commerce / Product Brand">
+                    <label for="q4c">
+                        <div class="option-dot"></div>
+                        <div class="option-text">
+                            <strong>E-commerce / Product Brand</strong>
+                            <span>Selling physical or digital products online</span>
+                        </div>
+                    </label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q4d" name="business_type" value="SaaS or Tech Company">
+                    <label for="q4d">
+                        <div class="option-dot"></div>
+                        <div class="option-text">
+                            <strong>SaaS or Tech Company</strong>
+                            <span>Software, apps, or tech products</span>
+                        </div>
+                    </label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q4e" name="business_type" value="Coach / Creator / Solopreneur">
+                    <label for="q4e">
+                        <div class="option-dot"></div>
+                        <div class="option-text">
+                            <strong>Coach / Creator / Solopreneur</strong>
+                            <span>Personal brand, coaching, content creation</span>
+                        </div>
+                    </label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q4f" name="business_type" value="other-placeholder" data-other="true">
+                    <label for="q4f">
+                        <div class="option-dot"></div>
+                        <div class="option-text">
+                            <strong>Other</strong>
+                            <span>Something different — tell us below</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+            <div id="q4-other-wrap" style="display:none; margin-top:0.8rem;">
+                <input type="text" id="q4-other-text" name="business_type_other" placeholder="Describe your business type..." class="other-input">
+            </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="card">
+            <div class="question-num">05</div>
+            <div class="question-title">What would a "win" look like in 90 days?</div>
+            <div class="question-sub">Be specific — the more detail, the better our recommendation</div>
+            <textarea
+                class="win-textarea"
+                name="win_in_90_days"
+                placeholder="e.g., 'We'd have a consistent content pipeline running on autopilot, our website would convert visitors, and we'd have automated follow-up so no leads fall through the cracks...'"
+                required
+            ></textarea>
+        </div>
+
+        <!-- Submit -->
+        <div class="submit-area">
+            <button type="submit" class="btn-submit" id="submit-btn">
+                <span id="submit-text">Get My AI Recommendation →</span>
+                <span id="submit-loading" style="display:none; display:flex; align-items:center; gap:8px;">
+                    <span class="spinner"></span> Sending...
+                </span>
+            </button>
+            <div class="error-msg" id="error-msg">
+                Please fill in all required fields before submitting.
+            </div>
+            <p class="submit-note">🔒 No spam. We'll respond within 24 hours with a personalized recommendation.</p>
+            <p class="submit-deep">Want a deeper analysis? <a href="discovery.html">Try the Full Discovery →</a></p>
+        </div>
+    </form>
+</div>
+
+<!-- Thank You Screen -->
+<div id="thank-you" style="display:none;">
+    <div class="ty-card">
+        <div class="ty-icon">🛡️</div>
+        <h2>You're all set!</h2>
+        <p class="ty-main">Your assessment has been received.</p>
+        <div class="ty-timer">⏱️ We'll get back to you within 24 hours with your tailored AI recommendation.</div>
+        <p class="ty-sub">
+            Want a deeper dive? Complete the <a href="discovery.html">Full Discovery</a> for a more detailed analysis and even faster matching.
+        </p>
+        <div class="ty-btns">
+            <a href="/" class="ty-btn-primary">← Back to Aegus</a>
+            <a href="discovery.html" class="ty-btn-secondary">Full Discovery →</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Show "other" text field when Other is selected for Q4
+    document.querySelectorAll('input[name="business_type"]').forEach(function(input) {
+        input.addEventListener('change', function() {
+            var wrap = document.getElementById('q4-other-wrap');
+            var otherText = document.getElementById('q4-other-text');
+            if (this.getAttribute('data-other') === 'true') {
+                wrap.style.display = 'block';
+                otherText.required = true;
+                // Update the radio value when text changes
+            } else {
+                wrap.style.display = 'none';
+                otherText.required = false;
+            }
+        });
+    });
+
+    // Update business_type value when typing "other"
+    document.getElementById('q4-other-text').addEventListener('input', function() {
+        var otherRadio = document.querySelector('input[data-other="true"]');
+        if (otherRadio && otherRadio.checked) {
+            otherRadio.value = 'Other: ' + this.value;
+        }
+    });
+
+    // Form submission
+    document.getElementById('intake-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        var form = this;
+        var btn = document.getElementById('submit-btn');
+        var submitText = document.getElementById('submit-text');
+        var submitLoading = document.getElementById('submit-loading');
+        var errorMsg = document.getElementById('error-msg');
+
+        // Validate required radio groups
+        var required = ['biggest_bottleneck', 'monthly_spend', 'timeline', 'business_type'];
+        var valid = true;
+
+        required.forEach(function(name) {
+            var checked = form.querySelector('input[name="' + name + '"]:checked');
+            if (!checked) valid = false;
+        });
+
+        if (!form.querySelector('input[name="name"]').value.trim()) valid = false;
+        if (!form.querySelector('input[name="email"]').value.trim()) valid = false;
+        if (!form.querySelector('input[name="business_name"]').value.trim()) valid = false;
+        if (!form.querySelector('textarea[name="win_in_90_days"]').value.trim()) valid = false;
+
+        if (!valid) {
+            errorMsg.style.display = 'block';
+            errorMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+        }
+
+        errorMsg.style.display = 'none';
+        btn.disabled = true;
+        submitText.style.display = 'none';
+        submitLoading.style.display = 'flex';
+
+        var formData = new FormData(form);
+
+        try {
+            var response = await fetch('https://formsubmit.co/ajax/aegus@agentmail.to', {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            });
+            // Show thank you
+            showThankYou();
+        } catch (err) {
+            // Network error — still show thank you (attempt was made)
+            showThankYou();
+        }
+    });
+
+    function showThankYou() {
+        document.getElementById('form-wrapper').style.display = 'none';
+        var ty = document.getElementById('thank-you');
+        ty.style.display = 'flex';
+        ty.style.alignItems = 'center';
+        ty.style.justifyContent = 'center';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+</body>
+</html>
