@@ -603,7 +603,7 @@
         </div>
 
         <!-- Q5 -->
-        <div class="card">
+        <div class="card" id="q5-section">
             <div class="question-num">05</div>
             <div class="question-title">What would a "win" look like in 90 days?</div>
             <div class="question-sub">Be specific — the more detail, the better our recommendation</div>
@@ -650,6 +650,44 @@
 </div>
 
 <script>
+    // Auto-scroll to next question on radio selection (Q1-Q4)
+    function scrollToNext(currentChoicesId) {
+        var order = ['q1-choices', 'q2-choices', 'q3-choices', 'q4-choices', 'q5-section'];
+        var idx = order.indexOf(currentChoicesId);
+        if (idx >= 0 && idx < order.length - 1) {
+            var nextEl = document.getElementById(order[idx + 1]);
+            if (nextEl) {
+                setTimeout(function() {
+                    nextEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 400);
+            }
+        }
+    }
+
+    // Q1-Q3: auto-advance on selection
+    ['q1-choices', 'q2-choices', 'q3-choices'].forEach(function(id) {
+        var container = document.getElementById(id);
+        if (container) {
+            container.querySelectorAll('input[type="radio"]').forEach(function(radio) {
+                radio.addEventListener('change', function() {
+                    scrollToNext(id);
+                });
+            });
+        }
+    });
+
+    // Q4: auto-advance only if NOT "Other"
+    var q4Container = document.getElementById('q4-choices');
+    if (q4Container) {
+        q4Container.querySelectorAll('input[type="radio"]').forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                if (this.getAttribute('data-other') !== 'true') {
+                    scrollToNext('q4-choices');
+                }
+            });
+        });
+    }
+
     // Show "other" text field when Other is selected for Q4
     document.querySelectorAll('input[name="business_type"]').forEach(function(input) {
         input.addEventListener('change', function() {
