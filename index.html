@@ -645,7 +645,7 @@ body {
   .services-grid { grid-template-columns: 1fr; }
   .process-grid { grid-template-columns: 1fr; gap: 16px; }
   .process-step { text-align: left; padding: 24px 0; }
-  .pricing-grid { grid-template-columns: 1fr; max-width: 420px; }
+  .pricing-grid { grid-template-columns: repeat(2, 1fr) !important; max-width: 100%; }
   .metrics-grid { grid-template-columns: repeat(2, 1fr); gap: 40px; }
   .section { padding: 80px 0; }
   .section-title { font-size: 28px; }
@@ -658,6 +658,9 @@ body {
   .nav-cta { display: none; }
   .metric-value { font-size: 28px; }
   .price-amount { font-size: 36px; }
+}
+@media (max-width: 480px) {
+  .pricing-grid { grid-template-columns: 1fr !important; max-width: 420px; }
 }
 </style>
 </head>
@@ -798,10 +801,23 @@ body {
   <div class="container">
     <div class="section-header fade-up" style="text-align: center;">
       <p class="section-label">Pricing</p>
-      <h2 class="section-title">Simple, project-based pricing</h2>
-      <p class="section-sub" style="margin-left: auto; margin-right: auto;">No retainers, no hourly billing. You know the cost before we start.</p>
+      <h2 class="section-title">Try before you buy</h2>
+      <p class="section-sub" style="margin-left: auto; margin-right: auto;">Start with a free audit. No risk, no commitment — just results.</p>
     </div>
-    <div class="pricing-grid fade-up">
+    <div class="pricing-grid fade-up" style="grid-template-columns: repeat(4, 1fr);">
+      <!-- Free Trial -->
+      <div class="price-card">
+        <p class="price-tier">Free Trial</p>
+        <p class="price-amount">$0</p>
+        <p class="price-desc">A free mini audit — we analyze one workflow and show you exactly what AI can fix.</p>
+        <ul class="price-features">
+          <li>15-min discovery call</li>
+          <li>1 workflow analysis</li>
+          <li>Custom recommendation</li>
+          <li>No commitment</li>
+        </ul>
+        <a href="intake.html" class="price-btn price-btn-secondary">Book Free Audit</a>
+      </div>
       <!-- Starter -->
       <div class="price-card">
         <p class="price-tier">Starter</p>
