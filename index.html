@@ -244,6 +244,104 @@ body {
   max-width: 560px;
 }
 
+/* ─── SHOWCASE ─── */
+.showcase {
+  padding: 120px 0;
+  background: var(--bg-primary);
+}
+.showcase-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+.showcase-frame {
+  max-width: 900px;
+  margin: 0 auto;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+.showcase-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 20px;
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid var(--border);
+}
+.showcase-dot {
+  width: 12px; height: 12px; border-radius: 50%;
+}
+.showcase-dot:nth-child(1) { background: #ff5f57; }
+.showcase-dot:nth-child(2) { background: #febc2e; }
+.showcase-dot:nth-child(3) { background: #28c840; }
+.showcase-title-bar {
+  flex: 1; text-align: center;
+  font-size: 13px; color: var(--text-faint);
+}
+.showcase-content {
+  padding: 32px;
+  min-height: 380px;
+  position: relative;
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.showcase-line {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  margin-bottom: 4px;
+}
+.showcase-line.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.sc-prompt { color: var(--accent); }
+.sc-cmd { color: var(--text-primary); }
+.sc-output { color: var(--text-muted); }
+.sc-success { color: #28c840; }
+.sc-warn { color: #febc2e; }
+.sc-highlight { color: var(--accent); font-weight: 600; }
+.showcase-cursor {
+  display: inline-block;
+  width: 8px; height: 17px;
+  background: var(--accent);
+  animation: blink 1s step-end infinite;
+  vertical-align: text-bottom;
+  margin-left: 2px;
+}
+@keyframes blink { 50% { opacity: 0; } }
+.showcase-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 32px;
+}
+.showcase-tab {
+  padding: 8px 20px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: none;
+  color: var(--text-muted);
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.showcase-tab.active,
+.showcase-tab:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-subtle);
+}
+@media (max-width: 960px) {
+  .showcase { padding: 80px 0; }
+  .showcase-content { padding: 20px; min-height: 320px; font-size: 12px; }
+}
+
 /* ─── SERVICES ─── */
 .services-grid {
   display: grid;
@@ -719,6 +817,32 @@ body {
   </div>
 </section>
 
+<!-- SHOWCASE -->
+<section class="showcase" id="demo">
+  <div class="container">
+    <div class="showcase-header fade-up">
+      <p class="section-label">See It In Action</p>
+      <h2 class="section-title">What we build looks like this</h2>
+      <p class="section-sub" style="margin: 16px auto 0;">Real examples of AI systems we deploy for clients.</p>
+    </div>
+    <div class="showcase-frame fade-up">
+      <div class="showcase-bar">
+        <div class="showcase-dot"></div>
+        <div class="showcase-dot"></div>
+        <div class="showcase-dot"></div>
+        <div class="showcase-title-bar" id="showcaseTitle">aegus — client-crm-setup</div>
+      </div>
+      <div class="showcase-content" id="showcaseContent">
+      </div>
+    </div>
+    <div class="showcase-tabs fade-up">
+      <button class="showcase-tab active" data-demo="crm">CRM Setup</button>
+      <button class="showcase-tab" data-demo="gpt">Custom GPT</button>
+      <button class="showcase-tab" data-demo="automation">Automation</button>
+    </div>
+  </div>
+</section>
+
 <!-- SERVICES -->
 <section class="section" id="services">
   <div class="container">
@@ -965,6 +1089,136 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
 document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// Showcase demos
+const demos = {
+  crm: {
+    title: 'aegus — client-crm-setup',
+    lines: [
+      { type: 'prompt', text: '❯ Building Notion CRM for @client...' },
+      { type: 'output', text: '' },
+      { type: 'success', text: '✓ Created database: Clients (42 fields mapped)' },
+      { type: 'success', text: '✓ Created database: Projects (linked to Clients)' },
+      { type: 'success', text: '✓ Created database: Invoices (auto-calculated totals)' },
+      { type: 'output', text: '' },
+      { type: 'cmd', text: 'Setting up views...' },
+      { type: 'output', text: '  └ Pipeline Board — drag-and-drop deal stages' },
+      { type: 'output', text: '  └ Calendar View — deadlines & follow-ups' },
+      { type: 'output', text: '  └ Revenue Dashboard — MRR, churn, LTV' },
+      { type: 'output', text: '' },
+      { type: 'cmd', text: 'Connecting integrations...' },
+      { type: 'success', text: '✓ Zapier: New Stripe payment → auto-create invoice' },
+      { type: 'success', text: '✓ Zapier: Form submit → new client row + welcome email' },
+      { type: 'success', text: '✓ Slack: Deal closed → #wins channel notification' },
+      { type: 'output', text: '' },
+      { type: 'highlight', text: '✨ CRM deployed. 3 databases, 4 automations, 0 manual work.' },
+      { type: 'output', text: '  Estimated time saved: 12 hours/week' },
+    ]
+  },
+  gpt: {
+    title: 'aegus — custom-gpt-build',
+    lines: [
+      { type: 'prompt', text: '❯ Building Custom GPT: "Support Agent Pro"...' },
+      { type: 'output', text: '' },
+      { type: 'cmd', text: 'Training on knowledge base...' },
+      { type: 'output', text: '  └ Loaded 147 support articles' },
+      { type: 'output', text: '  └ Loaded 2,340 past ticket resolutions' },
+      { type: 'output', text: '  └ Loaded product docs (v3.2)' },
+      { type: 'success', text: '✓ Knowledge base indexed — 4.2MB compressed' },
+      { type: 'output', text: '' },
+      { type: 'cmd', text: 'Configuring behavior...' },
+      { type: 'output', text: '  └ Tone: Professional, friendly, concise' },
+      { type: 'output', text: '  └ Escalation: Flag to human after 2 failed attempts' },
+      { type: 'output', text: '  └ Languages: EN, ES, FR (auto-detect)' },
+      { type: 'success', text: '✓ GPT deployed to API endpoint' },
+      { type: 'output', text: '' },
+      { type: 'cmd', text: 'Running test queries...' },
+      { type: 'success', text: '✓ "How do I reset my password?" → correct (0.8s)' },
+      { type: 'success', text: '✓ "Refund policy for annual plans" → correct (1.1s)' },
+      { type: 'warn', text: '△ "Can I talk to a human?" → escalated correctly' },
+      { type: 'output', text: '' },
+      { type: 'highlight', text: '✨ GPT live. Handles 80% of tickets automatically.' },
+    ]
+  },
+  automation: {
+    title: 'aegus — workflow-automation',
+    lines: [
+      { type: 'prompt', text: '❯ Deploying automation: "Lead → Client Pipeline"...' },
+      { type: 'output', text: '' },
+      { type: 'cmd', text: 'Building trigger chain...' },
+      { type: 'output', text: '' },
+      { type: 'success', text: '✓ Trigger: New form submission (Typeform)' },
+      { type: 'output', text: '  └ Step 1: Enrich lead data via Clearbit' },
+      { type: 'output', text: '  └ Step 2: Score lead (AI classifier, 0-100)' },
+      { type: 'output', text: '  └ Step 3: Add to Notion CRM + assign owner' },
+      { type: 'output', text: '  └ Step 4: Send personalized welcome email' },
+      { type: 'output', text: '  └ Step 5: Create Slack thread in #new-leads' },
+      { type: 'output', text: '' },
+      { type: 'cmd', text: 'Setting up follow-up sequences...' },
+      { type: 'success', text: '✓ Day 1: Welcome email (personalized by AI)' },
+      { type: 'success', text: '✓ Day 3: Value-add resource email' },
+      { type: 'success', text: '✓ Day 7: Soft check-in (if no response)' },
+      { type: 'warn', text: '△ Day 14: Final follow-up, then auto-archive' },
+      { type: 'output', text: '' },
+      { type: 'highlight', text: '✨ Pipeline live. Lead → qualified client in 7 days, zero manual steps.' },
+    ]
+  }
+};
+
+let currentDemo = 'crm';
+let demoTimeout = null;
+
+function runDemo(name) {
+  currentDemo = name;
+  const container = document.getElementById('showcaseContent');
+  const titleBar = document.getElementById('showcaseTitle');
+  const demo = demos[name];
+  if (!demo) return;
+  
+  titleBar.textContent = demo.title;
+  container.innerHTML = '';
+  if (demoTimeout) clearTimeout(demoTimeout);
+  
+  demo.lines.forEach((line, i) => {
+    const div = document.createElement('div');
+    div.className = 'showcase-line';
+    if (line.text === '') {
+      div.innerHTML = '&nbsp;';
+    } else {
+      div.innerHTML = '<span class="sc-' + line.type + '">' + line.text + '</span>';
+    }
+    container.appendChild(div);
+    setTimeout(() => div.classList.add('visible'), 120 * (i + 1));
+  });
+  
+  // Add cursor to last line
+  const totalTime = 120 * (demo.lines.length + 1);
+  demoTimeout = setTimeout(() => {
+    const cursor = document.createElement('span');
+    cursor.className = 'showcase-cursor';
+    container.appendChild(cursor);
+  }, totalTime);
+
+  // Update tab states
+  document.querySelectorAll('.showcase-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.demo === name);
+  });
+}
+
+// Tab clicks
+document.querySelectorAll('.showcase-tab').forEach(tab => {
+  tab.addEventListener('click', () => runDemo(tab.dataset.demo));
+});
+
+// Auto-start when visible
+const showcaseEl = document.querySelector('.showcase-frame');
+const showcaseObs = new IntersectionObserver((entries) => {
+  if (entries[0].isIntersecting) {
+    runDemo('crm');
+    showcaseObs.unobserve(showcaseEl);
+  }
+}, { threshold: 0.3 });
+if (showcaseEl) showcaseObs.observe(showcaseEl);
 </script>
 </body>
 </html>
