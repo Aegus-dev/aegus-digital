@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Aegus Digital Agency Case Studies</title>
+<meta name="description" content="Real results from real clients. See how we built custom Notion workspaces, AI assistants, and workflow automations that save 10–20 hours every week.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-deep: #08080f;
+  --bg-primary: #0e0e1a;
+  --bg-card: #151525;
+  --bg-card-hover: #1a1a30;
+  --text-primary: #f0f0f5;
+  --text-body: #c8c8d4;
+  --text-muted: #7a7a8e;
+  --text-faint: #4a4a5e;
+  --accent: #00d4aa;
+  --accent-hover: #00eabb;
+  --accent-subtle: rgba(0, 212, 170, 0.08);
+  --accent-glow: rgba(0, 212, 170, 0.15);
+  --secondary: #ff6b8a;
+  --border: rgba(255, 255, 255, 0.06);
+  --border-hover: rgba(255, 255, 255, 0.12);
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.3);
+  --shadow-card-hover: 0 8px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 212, 170, 0.1);
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --container: 1200px;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  background: var(--bg-deep);
+  color: var(--text-body);
+  font-size: 17px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ─── NAV ─── */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 20px 0;
+  transition: all 0.3s ease;
+}
+.nav.scrolled {
+  background: rgba(8, 8, 15, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 0;
+}
+.nav .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-logo {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.nav-logo span { color: var(--accent); }
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+}
+.nav-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition: color 0.2s;
+}
+.nav-links a:hover,
+.nav-links a.active { color: var(--text-primary); }
+.nav-links a.active { color: var(--accent); }
+.nav-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--accent);
+  color: var(--bg-deep);
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border: none;
+}
+.nav-cta:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(0, 212, 170, 0.3);
+}
+.nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+.nav-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--text-primary);
+  margin: 5px 0;
+  transition: 0.3s;
+}
+
+/* ─── PAGE HERO ─── */
+.page-hero {
+  padding: 160px 0 80px;
+  position: relative;
+  overflow: hidden;
+}
+.page-hero::before {
+  content: '';
+  position: absolute;
+  top: -200px;
+  right: -200px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(0, 212, 170, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+.page-hero-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 16px;
+}
+.page-hero h1 {
+  font-size: 56px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+  max-width: 680px;
+}
+.page-hero h1 em {
+  font-style: normal;
+  color: var(--accent);
+}
+.page-hero-sub {
+  font-size: 18px;
+  color: var(--text-body);
+  max-width: 560px;
+  line-height: 1.65;
+}
+
+/* ─── CASE STUDY CARDS ─── */
+.cases-section {
+  padding: 40px 0 120px;
+}
+
+.case-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 64px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.case-card:hover {
+  border-color: var(--border-hover);
+  box-shadow: 0 16px 60px rgba(0, 0, 0, 0.35);
+}
+
+/* ─── CASE HERO IMAGE ─── */
+.case-hero {
+  position: relative;
+  height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.case-hero-bg {
+  position: absolute;
+  inset: 0;
+  background: var(--bg-primary);
+}
+.case-hero-illustration {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+/* Notion illustration */
+.notion-ui {
+  width: 100%;
+  max-width: 700px;
+  background: #191927;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+}
+.notion-db {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 8px;
+  padding: 16px;
+}
+.notion-db-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.notion-row {
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.1);
+  margin-bottom: 8px;
+}
+.notion-row:nth-child(2) { width: 85%; }
+.notion-row:nth-child(3) { width: 70%; }
+.notion-row:nth-child(4) { width: 90%; }
+.notion-row:nth-child(5) { width: 60%; }
+.notion-arrow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  z-index: 2;
+  pointer-events: none;
+}
+.notion-hero-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+}
+
+/* GPT illustration */
+.gpt-ui {
+  width: 100%;
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.chat-bubble {
+  max-width: 65%;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.chat-bubble.user {
+  align-self: flex-end;
+  background: var(--accent-subtle);
+  border: 1px solid rgba(0,212,170,0.2);
+  color: var(--text-body);
+}
+.chat-bubble.ai {
+  align-self: flex-start;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  color: var(--text-body);
+}
+.chat-bubble.ai .ai-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+}
+.chat-typing {
+  align-self: flex-start;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 18px;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.typing-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  animation: typingPulse 1.2s ease-in-out infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typingPulse {
+  0%, 60%, 100% { opacity: 0.3; transform: scale(1); }
+  30% { opacity: 1; transform: scale(1.2); }
+}
+
+/* Automation illustration */
+.auto-ui {
+  width: 100%;
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.flow-step {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.flow-node {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-body);
+  white-space: nowrap;
+}
+.flow-node.trigger {
+  border-color: rgba(0,212,170,0.35);
+  background: rgba(0,212,170,0.08);
+  color: var(--accent);
+}
+.flow-node.action {
+  border-color: rgba(255,255,255,0.1);
+}
+.flow-node.result {
+  border-color: rgba(40, 200, 64, 0.3);
+  background: rgba(40, 200, 64, 0.06);
+  color: #4ade6e;
+}
+.flow-connector {
+  display: flex;
+  align-items: center;
+  padding: 2px 0 2px 20px;
+}
+.flow-line {
+  width: 2px;
+  height: 22px;
+  background: linear-gradient(to bottom, rgba(0,212,170,0.4), rgba(0,212,170,0.1));
+  margin-left: 40px;
+}
+.flow-badge {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  padding-left: 8px;
+}
+.auto-cols {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  gap: 0;
+  align-items: center;
+  width: 100%;
+}
+.flow-arrow-h {
+  color: var(--accent);
+  font-size: 18px;
+  padding: 0 8px;
+  opacity: 0.6;
+}
+
+/* ─── CASE NUMBER BADGE ─── */
+.case-number {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  background: rgba(8,8,15,0.7);
+  border: 1px solid var(--border);
+  padding: 5px 12px;
+  border-radius: 20px;
+  backdrop-filter: blur(8px);
+}
+.case-tag {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-subtle);
+  border: 1px solid rgba(0,212,170,0.2);
+  padding: 5px 14px;
+  border-radius: 20px;
+}
+
+/* ─── CASE BODY ─── */
+.case-body {
+  padding: 48px;
+}
+.case-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+  line-height: 1.25;
+}
+.case-client {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 36px;
+}
+.case-client strong {
+  color: var(--accent);
+}
+
+/* Before/After */
+.before-after {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0;
+  margin-bottom: 40px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.ba-panel {
+  padding: 28px 32px;
+}
+.ba-panel.before { border-right: 1px solid var(--border); }
+.ba-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 14px;
+}
+.ba-label.before-label { color: var(--secondary); }
+.ba-label.after-label { color: var(--accent); }
+.ba-items {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ba-items li {
+  font-size: 14px;
+  color: var(--text-body);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.5;
+}
+.ba-items li::before {
+  content: '';
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-top: 7px;
+}
+.before-panel .ba-items li::before { background: var(--secondary); opacity: 0.6; }
+.after-panel .ba-items li::before { background: var(--accent); }
+.ba-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  background: rgba(0,212,170,0.04);
+  border-right: 1px solid var(--border);
+}
+.ba-arrow-icon {
+  font-size: 22px;
+  color: var(--accent);
+  opacity: 0.6;
+}
+
+/* Detail grid */
+.case-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 36px;
+}
+.detail-block {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+}
+.detail-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-faint);
+  margin-bottom: 12px;
+}
+.detail-content {
+  font-size: 14px;
+  color: var(--text-body);
+  line-height: 1.65;
+}
+.detail-content strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* Results row */
+.case-results {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 36px;
+}
+.result-stat {
+  text-align: center;
+  padding: 24px 16px;
+  background: var(--accent-subtle);
+  border: 1px solid rgba(0,212,170,0.12);
+  border-radius: 12px;
+}
+.result-number {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+.result-label {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+/* Tech stack */
+.tech-stack {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.tech-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-right: 4px;
+}
+.tech-tag {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-body);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  padding: 5px 14px;
+  border-radius: 20px;
+  transition: border-color 0.2s, color 0.2s;
+}
+.tech-tag:hover {
+  border-color: rgba(0,212,170,0.3);
+  color: var(--accent);
+}
+
+/* ─── BOTTOM CTA ─── */
+.bottom-cta {
+  padding: 100px 0;
+  background: var(--bg-primary);
+}
+.cta-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 80px 60px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-card::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;
+  height: 300px;
+  background: radial-gradient(ellipse, rgba(0, 212, 170, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cta-title {
+  font-size: 40px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  letter-spacing: -0.015em;
+  position: relative;
+}
+.cta-sub {
+  font-size: 17px;
+  color: var(--text-muted);
+  margin-bottom: 40px;
+  position: relative;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.cta-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  position: relative;
+}
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--accent);
+  color: var(--bg-deep);
+  padding: 18px 36px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+.hero-cta:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 212, 170, 0.35);
+}
+.cta-link {
+  color: var(--text-muted);
+  font-size: 15px;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.cta-link:hover { color: var(--accent); }
+
+/* ─── FOOTER ─── */
+.footer {
+  padding: 60px 0;
+  border-top: 1px solid var(--border);
+}
+.footer .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+.footer-brand {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.footer-brand span { color: var(--accent); }
+.footer-links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+}
+.footer-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--accent); }
+.footer-copy {
+  color: var(--text-faint);
+  font-size: 13px;
+  width: 100%;
+  text-align: center;
+  margin-top: 24px;
+}
+
+/* ─── ANIMATIONS ─── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 960px) {
+  .nav-links { display: none; }
+  .nav-toggle { display: block; }
+  .nav-links.open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(8, 8, 15, 0.95);
+    backdrop-filter: blur(20px);
+    padding: 24px;
+    gap: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .page-hero h1 { font-size: 38px; }
+  .page-hero { padding: 140px 0 60px; }
+  .case-body { padding: 32px 24px; }
+  .case-hero { height: 240px; }
+  .case-details { grid-template-columns: 1fr; }
+  .case-results { grid-template-columns: 1fr 1fr; }
+  .before-after { grid-template-columns: 1fr; }
+  .ba-panel.before { border-right: none; border-bottom: 1px solid var(--border); }
+  .ba-arrow { padding: 16px; border-right: none; border-bottom: 1px solid var(--border); }
+  .ba-arrow-icon { transform: rotate(90deg); }
+  .cta-card { padding: 48px 24px; }
+  .cta-title { font-size: 28px; }
+  .notion-ui { grid-template-columns: 1fr; }
+  .auto-cols { grid-template-columns: 1fr; }
+  .flow-arrow-h { display: none; }
+}
+@media (max-width: 600px) {
+  .case-results { grid-template-columns: 1fr; }
+  .nav-cta { display: none; }
+  .page-hero h1 { font-size: 30px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="container">
+    <a href="index.html" class="nav-logo">Aegus<span>.</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="portfolio.html" class="active">Portfolio</a></li>
+      <li><a href="index.html#process">Process</a></li>
+      <li><a href="index.html#pricing">Pricing</a></li>
+      <li><a href="index.html#faq">FAQ</a></li>
+    </ul>
+    <a href="intake.html" class="nav-cta">Get Started →</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<header class="page-hero">
+  <div class="container">
+    <div class="fade-up">
+      <p class="page-hero-label">Case Studies</p>
+      <h1>Real clients. Real results. <em>Real transformation.</em></h1>
+      <p class="page-hero-sub">Three examples of what we build — custom AI systems, smart workspaces, and automations that give back your most valuable resource: time.</p>
+    </div>
+  </div>
+</header>
+
+<!-- CASE STUDIES -->
+<section class="cases-section">
+  <div class="container">
+
+    <!-- ─── CASE STUDY 1: NOTION ─── -->
+    <div class="case-card fade-up">
+      <div class="case-hero">
+        <div class="case-hero-bg"></div>
+        <div class="case-hero-illustration">
+          <div class="notion-hero-wrap">
+            <div class="notion-ui">
+              <div class="notion-db">
+                <div class="notion-db-title">👥 Clients</div>
+                <div class="notion-row"></div>
+                <div class="notion-row"></div>
+                <div class="notion-row"></div>
+                <div class="notion-row"></div>
+              </div>
+              <div class="notion-db">
+                <div class="notion-db-title">📋 Projects</div>
+                <div class="notion-row"></div>
+                <div class="notion-row"></div>
+                <div class="notion-row"></div>
+                <div class="notion-row"></div>
+              </div>
+              <div class="notion-db">
+                <div class="notion-db-title">🧾 Invoices</div>
+                <div class="notion-row"></div>
+                <div class="notion-row"></div>
+                <div class="notion-row"></div>
+                <div class="notion-row"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <span class="case-number">Case Study 01</span>
+        <span class="case-tag">📋 Notion Workspace</span>
+      </div>
+      <div class="case-body">
+        <h2 class="case-title">From Chaos to Command: Freelancer Workspace System</h2>
+        <p class="case-client">Client: <strong>Freelance Copywriter</strong> — overwhelmed with 6+ active clients, sticky notes, and scattered spreadsheets</p>
+
+        <div class="before-after">
+          <div class="ba-panel before before-panel">
+            <p class="ba-label before-label">❌ Before</p>
+            <ul class="ba-items">
+              <li>Client info scattered across emails, sticky notes, and Google Sheets</li>
+              <li>No way to see outstanding invoices at a glance</li>
+              <li>Deadlines tracked in a basic calendar with no project context</li>
+              <li>Manually calculating totals for each invoice every time</li>
+              <li>No system to track overdue payments or follow up</li>
+            </ul>
+          </div>
+          <div class="ba-arrow">
+            <span class="ba-arrow-icon">→</span>
+          </div>
+          <div class="ba-panel after-panel">
+            <p class="ba-label after-label">✓ After</p>
+            <ul class="ba-items">
+              <li>3 linked databases: Clients → Projects → Invoices, all connected</li>
+              <li>Outstanding balance auto-calculated per client in real time</li>
+              <li>Pipeline board shows every project status at a glance</li>
+              <li>Overdue projects flagged automatically with formula alerts</li>
+              <li>Revenue dashboard showing MRR, paid, and outstanding totals</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="case-results">
+          <div class="result-stat">
+            <div class="result-number">3</div>
+            <div class="result-label">Linked databases, fully connected</div>
+          </div>
+          <div class="result-stat">
+            <div class="result-number">5+</div>
+            <div class="result-label">Custom views & dashboards</div>
+          </div>
+          <div class="result-stat">
+            <div class="result-number">0</div>
+            <div class="result-label">Manual invoice calculations</div>
+          </div>
+        </div>
+
+        <div class="case-details">
+          <div class="detail-block">
+            <p class="detail-label">The Challenge</p>
+            <p class="detail-content">A copywriter managing 6+ simultaneous clients had no single source of truth. Invoices were done in Google Docs, deadlines in a basic calendar, client notes in email. Things were falling through the cracks — including overdue payments.</p>
+          </div>
+          <div class="detail-block">
+            <p class="detail-label">Our Solution</p>
+            <p class="detail-content">We built a three-database Notion workspace where <strong>Clients → Projects → Invoices</strong> are all linked. Automated formulas surface overdue alerts, calculate outstanding balances, and flag projects past deadline — no manual tracking needed.</p>
+          </div>
+          <div class="detail-block">
+            <p class="detail-label">Key Deliverable</p>
+            <p class="detail-content">A complete workspace with 5 custom views (Pipeline Board, Deadline Calendar, Revenue Dashboard, Leads Tracker, Overdue Filter) plus a master dashboard page pulling data from all three databases into one command center.</p>
+          </div>
+        </div>
+
+        <div class="tech-stack">
+          <span class="tech-label">Built with</span>
+          <span class="tech-tag">Notion</span>
+          <span class="tech-tag">Relational Databases</span>
+          <span class="tech-tag">Notion Formulas</span>
+          <span class="tech-tag">Rollup Properties</span>
+          <span class="tech-tag">Board &amp; Calendar Views</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── CASE STUDY 2: CUSTOM GPT ─── -->
+    <div class="case-card fade-up">
+      <div class="case-hero" style="background: linear-gradient(135deg, #0d0d1f 0%, #111120 100%);">
+        <div class="case-hero-bg" style="background: linear-gradient(135deg, #0a0a1a 0%, #0f0f22 100%);"></div>
+        <div class="case-hero-illustration">
+          <div class="gpt-ui">
+            <div class="chat-bubble user">A buyer asked if the neighborhood is safe — I have a family with young kids. How should I respond?</div>
+            <div class="chat-bubble ai">
+              <div class="ai-label">🏠 HomeVoice AI</div>
+              That's a great question to handle carefully. Here's a draft response that's warm, factually prudent, and avoids Fair Housing issues: "Hi [Name], I'm glad you asked — neighborhood feel is everything when you have kids. I'd recommend checking NeighborhoodScout.com and the local police crime map for current data. I'm also happy to connect you with current residents..."
+            </div>
+            <div class="chat-bubble user">Perfect. Now write a listing description for a 3/2 ranch in Riverside Heights, $489k.</div>
+            <div class="chat-typing">
+              <div class="typing-dot"></div>
+              <div class="typing-dot"></div>
+              <div class="typing-dot"></div>
+            </div>
+          </div>
+        </div>
+        <span class="case-number">Case Study 02</span>
+        <span class="case-tag">🤖 Custom GPT</span>
+      </div>
+      <div class="case-body">
+        <h2 class="case-title">HomeVoice: The AI Real Estate Assistant That's Always On</h2>
+        <p class="case-client">Client: <strong>Residential Real Estate Agent</strong> — spending hours writing listing descriptions and responding to repetitive client inquiries</p>
+
+        <div class="before-after">
+          <div class="ba-panel before before-panel">
+            <p class="ba-label before-label">❌ Before</p>
+            <ul class="ba-items">
+              <li>Writing listing descriptions from scratch for every property</li>
+              <li>Sensitive client questions (crime, schools) handled inconsistently</li>
+              <li>Follow-up emails rewritten every time from memory</li>
+              <li>No consistent brand voice across client communications</li>
+              <li>Nights and weekends spent responding to inquiries</li>
+            </ul>
+          </div>
+          <div class="ba-arrow">
+            <span class="ba-arrow-icon">→</span>
+          </div>
+          <div class="ba-panel after-panel">
+            <p class="ba-label after-label">✓ After</p>
+            <ul class="ba-items">
+              <li>Property descriptions in 30 seconds — MLS-ready, no clichés</li>
+              <li>Legally careful, Fair Housing-compliant responses to every inquiry type</li>
+              <li>5 pre-built email templates for every client journey stage</li>
+              <li>Consistent expert voice across all communications</li>
+              <li>Available 24/7 — responds in seconds, not hours</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="case-results">
+          <div class="result-stat">
+            <div class="result-number">80%</div>
+            <div class="result-label">Of repetitive tasks handled automatically</div>
+          </div>
+          <div class="result-stat">
+            <div class="result-number">30s</div>
+            <div class="result-label">To generate a full listing description</div>
+          </div>
+          <div class="result-stat">
+            <div class="result-number">24/7</div>
+            <div class="result-label">Available for client Q&amp;A, any time zone</div>
+          </div>
+        </div>
+
+        <div class="case-details">
+          <div class="detail-block">
+            <p class="detail-label">The Challenge</p>
+            <p class="detail-content">A busy real estate agent was spending 2–3 hours daily on writing tasks: property descriptions, follow-up emails, and navigating sensitive client questions about neighborhoods and market conditions — all while managing active listings.</p>
+          </div>
+          <div class="detail-block">
+            <p class="detail-label">Our Solution</p>
+            <p class="detail-content">We built <strong>HomeVoice</strong> — a purpose-trained Custom GPT loaded with the agent's knowledge base, brand voice, local market data, and objection scripts. It handles listing copy, client Q&amp;A, and follow-up emails with consistent professionalism.</p>
+          </div>
+          <div class="detail-block">
+            <p class="detail-label">Key Deliverable</p>
+            <p class="detail-content">A fully configured Custom GPT with 5 conversation modes, Fair Housing-compliant response templates, market summary generation, and a 6-file knowledge base covering listings, neighborhoods, and common objections — ready to deploy in minutes.</p>
+          </div>
+        </div>
+
+        <div class="tech-stack">
+          <span class="tech-label">Built with</span>
+          <span class="tech-tag">Custom GPT (GPT-4o)</span>
+          <span class="tech-tag">Knowledge Base Design</span>
+          <span class="tech-tag">Prompt Engineering</span>
+          <span class="tech-tag">System Instructions</span>
+          <span class="tech-tag">OpenAI Platform</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── CASE STUDY 3: AUTOMATION ─── -->
+    <div class="case-card fade-up">
+      <div class="case-hero" style="background: #0a0f1a;">
+        <div class="case-hero-bg" style="background: linear-gradient(135deg, #08080f 0%, #0a1020 100%);"></div>
+        <div class="case-hero-illustration">
+          <div class="auto-ui">
+            <div class="flow-step">
+              <div class="flow-node trigger">🛍️ New Etsy Message</div>
+              <span class="flow-arrow-h">→</span>
+              <div class="flow-node action">🤖 AI Classifies Intent</div>
+              <span class="flow-arrow-h">→</span>
+              <div class="flow-node action">📨 Auto-Reply or Escalate</div>
+            </div>
+            <div class="flow-line"></div>
+            <div class="flow-step">
+              <div class="flow-node trigger">📸 Photo → Drive Folder</div>
+              <span class="flow-arrow-h">→</span>
+              <div class="flow-node action">✍️ AI Writes Caption</div>
+              <span class="flow-arrow-h">→</span>
+              <div class="flow-node result">✅ Scheduled to Instagram</div>
+            </div>
+            <div class="flow-line"></div>
+            <div class="flow-step">
+              <div class="flow-node trigger">📊 Stock Drops Low</div>
+              <span class="flow-arrow-h">→</span>
+              <div class="flow-node action">🔔 Instant SMS + Email</div>
+              <span class="flow-arrow-h">→</span>
+              <div class="flow-node result">✅ Logged to Sheet</div>
+            </div>
+          </div>
+        </div>
+        <span class="case-number">Case Study 03</span>
+        <span class="case-tag">⚡ Workflow Automation</span>
+      </div>
+      <div class="case-body">
+        <h2 class="case-title">15 Hours Back Per Week: Etsy Shop Automation Suite</h2>
+        <p class="case-client">Client: <strong>Etsy Candle Shop Owner</strong> — drowning in manual customer messages, inconsistent Instagram posts, and reactive inventory management</p>
+
+        <div class="before-after">
+          <div class="ba-panel before before-panel">
+            <p class="ba-label before-label">❌ Before</p>
+            <ul class="ba-items">
+              <li>15+ customer messages/week answered manually, one by one</li>
+              <li>Instagram captions written from scratch — often skipped entirely</li>
+              <li>Inventory checked manually by scanning Etsy listings</li>
+              <li>Overselling happened when stock ran out unexpectedly</li>
+              <li>Response time: hours to days, hurting Etsy search ranking</li>
+            </ul>
+          </div>
+          <div class="ba-arrow">
+            <span class="ba-arrow-icon">→</span>
+          </div>
+          <div class="ba-panel after-panel">
+            <p class="ba-label after-label">✓ After</p>
+            <ul class="ba-items">
+              <li>60% of messages handled automatically within minutes</li>
+              <li>Drop photo in folder → Instagram caption + schedule done automatically</li>
+              <li>Instant SMS + email when any SKU hits reorder threshold</li>
+              <li>Zero oversells — proactive alerts before stock runs out</li>
+              <li>Response time: under 5 minutes, 24/7, improving search ranking</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="case-results">
+          <div class="result-stat">
+            <div class="result-number">15h+</div>
+            <div class="result-label">Saved every single week</div>
+          </div>
+          <div class="result-stat">
+            <div class="result-number">3×</div>
+            <div class="result-label">Faster customer response time</div>
+          </div>
+          <div class="result-stat">
+            <div class="result-number">3</div>
+            <div class="result-label">Full automations running 24/7</div>
+          </div>
+        </div>
+
+        <div class="case-details">
+          <div class="detail-block">
+            <p class="detail-label">The Challenge</p>
+            <p class="detail-content">A solo Etsy seller making handmade candles was spending 8–12 hours/week on three purely repetitive tasks: answering customer messages, writing Instagram captions, and manually tracking inventory — leaving almost no time for actual making.</p>
+          </div>
+          <div class="detail-block">
+            <p class="detail-label">Our Solution</p>
+            <p class="detail-content">Three Make.com automations, all running in parallel: an <strong>AI-powered customer responder</strong> that classifies and replies to messages, an <strong>Instagram scheduler</strong> that generates captions from photos, and an <strong>inventory alert system</strong> that fires before stock runs out.</p>
+          </div>
+          <div class="detail-block">
+            <p class="detail-label">Key Deliverable</p>
+            <p class="detail-content">A complete automation suite with 18+ configured modules, an AI classification engine, a Google Sheets logging system, Buffer integration for Instagram, and Twilio SMS alerts — all running for under $32/month in tool costs.</p>
+          </div>
+        </div>
+
+        <div class="tech-stack">
+          <span class="tech-label">Built with</span>
+          <span class="tech-tag">Make.com</span>
+          <span class="tech-tag">OpenAI API</span>
+          <span class="tech-tag">Zapier</span>
+          <span class="tech-tag">Buffer</span>
+          <span class="tech-tag">Google Sheets</span>
+          <span class="tech-tag">Twilio SMS</span>
+          <span class="tech-tag">Etsy API</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- BOTTOM CTA -->
+<section class="bottom-cta">
+  <div class="container">
+    <div class="cta-card fade-up">
+      <h2 class="cta-title">Ready for your transformation?</h2>
+      <p class="cta-sub">Tell us about your workflow in 2 minutes. We'll send back a custom plan within 24 hours — no commitment required.</p>
+      <div class="cta-buttons">
+        <a href="intake.html" class="hero-cta">Start Your Free Audit →</a>
+        <a href="index.html" class="cta-link">← Back to site</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-brand">Aegus<span>.</span></div>
+    <ul class="footer-links">
+      <li><a href="mailto:aegus@agentmail.to">aegus@agentmail.to</a></li>
+      <li><a href="https://fiverr.com/hazzy555" target="_blank" rel="noopener">Fiverr</a></li>
+      <li><a href="https://hazzy555.gumroad.com" target="_blank" rel="noopener">Gumroad</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 Aegus Digital Agency. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+// Nav scroll effect
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// Mobile toggle
+const toggle = document.getElementById('navToggle');
+const links = document.getElementById('navLinks');
+toggle.addEventListener('click', () => links.classList.toggle('open'));
+links.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => links.classList.remove('open'));
+});
+
+// Scroll fade-in
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
