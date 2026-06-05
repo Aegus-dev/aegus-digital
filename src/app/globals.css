@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Inter Variable loaded via CDN for MVP — swap to local woff2 before ship */
+@import url('https://rsms.me/inter/inter.css');
+
+:root {
+  /* Palette D Monochrome + Heat — canonical values from
+     project_aegus_palette_canonical.md (locked 2026-04-11 02:19 EDT) */
+  --bg:            #08090a;
+  --bg-alt:        #0f1015;
+
+  --fg:            #ffffff;  /* pure white, NOT off-white */
+  --fg-dim:        #9ca3af;
+
+  --accent:        #f97316;  /* orange — interactive ONLY */
+  --accent-hover:  #fb923c;
+
+  --border:        rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --card-bg:       rgba(255, 255, 255, 0.03);
+  --card-bg-hover: rgba(255, 255, 255, 0.06);
+}
+
+@supports (font-variation-settings: normal) {
+  :root { font-family: 'Inter Variable', 'Inter', sans-serif; }
+}
+
+html, body {
+  background: var(--bg);
+  color: var(--fg);
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "cv01", "ss03"; /* Linear's signature */
+  font-optical-sizing: auto;
+  min-height: 100vh;
+}
+
+body {
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+@keyframes dot-pulse {
+  0%, 100% { filter: brightness(1) drop-shadow(0 0 0px transparent); }
+  50% { filter: brightness(1.15) drop-shadow(0 0 6px rgba(249, 115, 22, 0.5)); }
+}
+
+.aegus-dot-pulse {
+  animation: dot-pulse 2.5s ease-in-out infinite;
+}
