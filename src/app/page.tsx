@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { FadeIn } from "@/components/FadeIn";
 import { CountUp } from "@/components/CountUp";
-import { HeroVisual } from "@/components/HeroVisual";
 import { benchmark } from "@/lib/snapshot";
 
 const EYEBROW =
@@ -12,45 +11,40 @@ const EYEBROW =
 function Hero() {
   return (
     <section className="relative overflow-hidden">
-      <div className="mx-auto flex flex-col md:flex-row max-w-[1280px] items-center gap-10 md:gap-8 px-4 pt-16 pb-14 md:px-6 md:pt-[120px] md:pb-[96px]">
-        <div className="flex-1">
-          <p className={`${EYEBROW} mb-6 md:mb-8`}>
-            Toronto · systems engineering
+      <div className="mx-auto max-w-[1280px] px-4 pt-16 pb-14 md:px-6 md:pt-[120px] md:pb-[96px]">
+        <p className={`${EYEBROW} mb-6 md:mb-8`}>
+          Toronto · systems engineering
+        </p>
+        <FadeIn>
+          <h1 className="text-[36px] font-[510] leading-[1.05] tracking-[-0.8px] text-fg md:text-display-hero max-w-[920px]">
+            Memecoin research meets{" "}
+            <span className="text-heat">multi-asset trading.</span>
+          </h1>
+        </FadeIn>
+        <FadeIn delay={200}>
+          <p className="mt-6 max-w-[720px] text-body text-fg-dim md:mt-8 md:text-body-lg">
+            Aegus PATH discovers narratives the moment they reawaken and
+            trades Solana memecoins, BTC, tokenized gold, and xStocks
+            equities from one hub. Every signal Institute-graded. Every
+            grade explained. Every dissent surfaced.
           </p>
-          <FadeIn>
-            <h1 className="text-[36px] font-[510] leading-[1.05] tracking-[-0.8px] text-fg md:text-display-hero max-w-[860px]">
-              Memecoin research meets{" "}
-              <span className="text-heat">multi-asset trading.</span>
-            </h1>
-          </FadeIn>
-          <FadeIn delay={200}>
-            <p className="mt-6 max-w-[680px] text-body text-fg-dim md:mt-8 md:text-body-lg">
-              Aegus PATH discovers narratives the moment they reawaken and
-              trades Solana memecoins, BTC, tokenized gold, and xStocks
-              equities from one hub. Every signal Institute-graded. Every
-              grade explained. Every dissent surfaced.
-            </p>
-          </FadeIn>
-          <FadeIn delay={400}>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                href="/app"
-                className="inline-flex items-center gap-2 rounded-[10px] bg-heat px-5 py-3 text-[14px] font-[590] text-canvas transition-colors hover:bg-heat-hover"
-              >
-                Open the PATH app <span aria-hidden>→</span>
-              </Link>
-              <Link
-                href="/path"
-                className="inline-flex items-center gap-2 rounded-[10px] border border-white/15 px-5 py-3 text-[14px] font-[590] text-fg transition-colors hover:border-white/30"
-              >
-                How PATH works
-              </Link>
-            </div>
-          </FadeIn>
-        </div>
-        <div className="hidden md:block shrink-0">
-          <HeroVisual />
-        </div>
+        </FadeIn>
+        <FadeIn delay={400}>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link
+              href="/app"
+              className="inline-flex items-center gap-2 rounded-[10px] bg-heat px-5 py-3 text-[14px] font-[590] text-canvas transition-colors hover:bg-heat-hover"
+            >
+              Open the PATH app <span aria-hidden>→</span>
+            </Link>
+            <Link
+              href="/path"
+              className="inline-flex items-center gap-2 rounded-[10px] border border-white/15 px-5 py-3 text-[14px] font-[590] text-fg transition-colors hover:border-white/30"
+            >
+              How PATH works
+            </Link>
+          </div>
+        </FadeIn>
       </div>
     </section>
   );

@@ -1,11 +1,18 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export function Footer() {
   return (
     <footer className="border-t border-white/5 bg-canvas">
       <div className="mx-auto flex max-w-[1280px] flex-col gap-4 px-4 py-10 md:flex-row md:items-center md:justify-between md:px-6">
-        <div className="flex flex-col gap-1">
-          <span className="text-[13px] font-[590] text-fg">Aegus</span>
+        <div className="flex flex-col gap-2">
+          <Image
+            src="/aegus-wordmark.svg"
+            alt="Aegus"
+            width={80}
+            height={18}
+            className="h-[18px] w-auto"
+          />
           <span className="text-[11px] uppercase tracking-[0.15em] text-fg-dim">
             Toronto · systems engineering
           </span>

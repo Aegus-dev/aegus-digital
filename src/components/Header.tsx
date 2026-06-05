@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const NAV = [
   { href: "/path", label: "PATH" },
@@ -9,11 +10,16 @@ export function Header() {
   return (
     <header className="border-b border-white/5 bg-canvas/80 backdrop-blur supports-[backdrop-filter]:bg-canvas/60">
       <div className="mx-auto flex max-w-[1280px] items-center justify-between px-4 py-4 md:px-6 md:py-5">
-        <Link href="/" className="flex items-center gap-2 group" aria-label="Aegus home">
-          <span className="text-[15px] font-[590] tracking-[-0.2px] text-fg group-hover:text-heat transition-colors">
-            Aegus
-          </span>
-          <span className="text-[11px] uppercase tracking-[0.15em] text-fg-dim group-hover:text-fg transition-colors">
+        <Link href="/" className="flex items-center gap-3 group" aria-label="Aegus home">
+          <Image
+            src="/aegus-wordmark.svg"
+            alt="Aegus"
+            width={88}
+            height={20}
+            priority
+            className="h-5 w-auto group-hover:opacity-90 transition-opacity"
+          />
+          <span className="hidden md:inline text-[11px] uppercase tracking-[0.15em] text-fg-dim">
             · Toronto
           </span>
         </Link>
