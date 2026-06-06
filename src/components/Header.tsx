@@ -12,12 +12,12 @@ export function Header() {
       <div className="mx-auto flex max-w-[1280px] items-center justify-between px-4 py-4 md:px-6 md:py-5">
         <Link href="/" className="flex items-center gap-3 group" aria-label="Aegus home">
           <Image
-            src="/aegus-wordmark.svg"
+            src="/aegus-wordmark-sm.png"
             alt="Aegus"
-            width={88}
-            height={20}
+            width={120}
+            height={28}
             priority
-            className="h-5 w-auto group-hover:opacity-90 transition-opacity"
+            className="h-6 w-auto group-hover:opacity-90 transition-opacity"
           />
           <span className="hidden md:inline text-[11px] uppercase tracking-[0.15em] text-fg-dim">
             · Toronto

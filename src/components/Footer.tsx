@@ -7,11 +7,11 @@ export function Footer() {
       <div className="mx-auto flex max-w-[1280px] flex-col gap-4 px-4 py-10 md:flex-row md:items-center md:justify-between md:px-6">
         <div className="flex flex-col gap-2">
           <Image
-            src="/aegus-wordmark.svg"
+            src="/aegus-wordmark-sm.png"
             alt="Aegus"
-            width={80}
-            height={18}
-            className="h-[18px] w-auto"
+            width={104}
+            height={24}
+            className="h-[22px] w-auto"
           />
           <span className="text-[11px] uppercase tracking-[0.15em] text-fg-dim">
             Toronto · systems engineering
