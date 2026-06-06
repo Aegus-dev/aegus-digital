@@ -10,18 +10,15 @@ export function Header() {
   return (
     <header className="border-b border-white/5 bg-canvas/80 backdrop-blur supports-[backdrop-filter]:bg-canvas/60">
       <div className="mx-auto flex max-w-[1280px] items-center justify-between px-4 py-4 md:px-6 md:py-5">
-        <Link href="/" className="flex items-center gap-3 group" aria-label="Aegus home">
+        <Link href="/" className="flex items-center group" aria-label="Aegus home">
           <Image
             src="/aegus-wordmark-sm.png"
             alt="Aegus"
             width={141}
             height={24}
             priority
-            className="h-6 w-auto group-hover:opacity-90 transition-opacity"
+            className="h-6 w-auto transition-[filter,opacity] duration-300 group-hover:opacity-100 group-hover:[filter:drop-shadow(0_0_10px_rgba(249,115,22,0.55))]"
           />
-          <span className="hidden md:inline text-[11px] uppercase tracking-[0.15em] text-fg-dim">
-            · Toronto
-          </span>
         </Link>
         <nav className="flex items-center gap-1 md:gap-2">
           {NAV.map((n) => (
