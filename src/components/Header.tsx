@@ -14,8 +14,8 @@ export function Header() {
           <Image
             src="/aegus-wordmark-sm.png"
             alt="Aegus"
-            width={120}
-            height={28}
+            width={141}
+            height={24}
             priority
             className="h-6 w-auto group-hover:opacity-90 transition-opacity"
           />

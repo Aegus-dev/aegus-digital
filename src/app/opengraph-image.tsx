@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Aegus Digital — AI systems that run your business while you sleep";
+export const alt = "Aegus PATH — Memecoin research + multi-asset trading";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -38,7 +38,7 @@ export default async function OgImage() {
             ◆
           </div>
           <div style={{ fontSize: 22, fontWeight: 510, letterSpacing: "0.05em" }}>
-            AEGUS DIGITAL
+            AEGUS PATH
           </div>
         </div>
 
@@ -55,11 +55,11 @@ export default async function OgImage() {
               gap: "0 0.3em",
             }}
           >
-            <span>AI systems that run your business</span>
-            <span style={{ color: "#f97316" }}>while you sleep.</span>
+            <span>Memecoin research meets</span>
+            <span style={{ color: "#f97316" }}>multi-asset trading.</span>
           </div>
           <div style={{ fontSize: 26, color: "#8a8f98", maxWidth: 900, lineHeight: 1.4 }}>
-            20 products. One system. 24/7 from Toronto.
+            Solana memecoins · BTC · tokenized gold · xStocks equities.
           </div>
         </div>
 

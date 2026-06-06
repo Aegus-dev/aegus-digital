@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { FadeIn } from "@/components/FadeIn";
+import { tunnelFor } from "@/lib/snapshot";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -8,12 +9,13 @@ export const metadata: Metadata = {
     "Launch the live Aegus PATH application — Solana wallet sign-in, paper trading, Institute-graded signals across four asset classes.",
 };
 
-const APP_URL = process.env.NEXT_PUBLIC_PATH_APP_URL ?? "https://path.aegus.digital";
-
 const EYEBROW =
   "text-[12px] font-[510] uppercase tracking-[0.15em] text-fg-dim";
 
 export default function AppLaunchPage() {
+  // Pull the live tunnel URL injected at build time by deploy.sh
+  const appUrl = tunnelFor("pathapp");
+
   return (
     <section className="mx-auto flex min-h-[calc(100vh-260px)] max-w-[920px] flex-col items-center justify-center gap-8 px-4 py-16 text-center md:px-6 md:py-[120px]">
       <FadeIn>
@@ -29,12 +31,20 @@ export default function AppLaunchPage() {
         </p>
       </FadeIn>
       <FadeIn delay={240}>
-        <Link
-          href={APP_URL}
-          className="inline-flex items-center gap-2 rounded-[12px] bg-heat px-6 py-4 text-[16px] font-[590] text-canvas transition-colors hover:bg-heat-hover"
-        >
-          Open PATH app <span aria-hidden>→</span>
-        </Link>
+        {appUrl ? (
+          <Link
+            href={appUrl}
+            className="inline-flex items-center gap-2 rounded-[12px] bg-heat px-6 py-4 text-[16px] font-[590] text-canvas transition-colors hover:bg-heat-hover"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Open PATH app <span aria-hidden>→</span>
+          </Link>
+        ) : (
+          <div className="inline-flex items-center gap-2 rounded-[12px] border border-white/15 px-6 py-4 text-[14px] text-fg-dim">
+            PATH app endpoint not currently published. Check back shortly.
+          </div>
+        )}
       </FadeIn>
       <FadeIn delay={360}>
         <p className="text-[12px] text-fg-dim">
