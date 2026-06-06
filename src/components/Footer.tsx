@@ -6,13 +6,13 @@ export function Footer() {
     <footer className="border-t border-white/5 bg-canvas">
       <div className="mx-auto max-w-[1280px] px-4 py-10 md:px-6">
         <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 items-start">
             <Image
               src="/aegus-wordmark-sm.png"
               alt="Aegus"
               width={129}
               height={22}
-              className="h-[22px] w-auto"
+              className="block w-[129px] h-[22px]"
             />
             <span className="text-[11px] uppercase tracking-[0.15em] text-fg-dim">
               Toronto · systems engineering
